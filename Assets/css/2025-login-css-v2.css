@@ -1,0 +1,534 @@
+/* 
+
+    ========================================================================================================
+
+    Nexure CRM Login Stylesheet
+    Version 25.08.07
+    Support Link: https://nexuresolutions.com/contact
+    Website: https://nexuresolutions.com
+    Last Edited: Sun Aug 07 2025 at 09:34:14 AM Eastern Time
+    
+    Copyright Statement: Do not copy this website, if the code is found to be duplicated, reproduced,
+    or copied we will fine you a minimum of $250,000 and criminal charges may be pressed.
+
+    CopyOurCodeWeWillSendYouToJesus(C)2025ThisIsOurHardWork.
+
+    Dear rule breakers, questioners, straight-A students who skipped class: We want you.
+    https://nexuresolutions.com/careers.
+
+    =======================================================================================================
+
+*/
+
+/* ====================== TO BE REMOVED AFTER DEVELOPMENT ===================== */
+
+.confidential-watermark {
+    position: fixed;
+    bottom: 15%;
+    right:-10%;
+    left:auto;
+    color: #fff;
+    font-size:12px;
+}
+
+/* ====================== Global Styles ===================== */
+
+body {
+    margin:0;
+    padding:0;
+    background-color: rgba(245, 245, 247);
+    height:100vh;
+}
+
+a {
+    color:black;
+    transition: all 0.3s ease-in-out;
+}
+
+a:hover {
+    color:#222;
+}
+
+.height-100 {
+    height: unset !important;
+    height:100%;
+}
+
+.gray-100 {
+    color:#646464 !important;
+}
+
+.arrow {
+    padding-top: 2px;
+}
+
+.font-10px {
+    font-size: 10px !important;
+}
+
+.login-background {
+    background-image: url("/Assets/img/SystemImages/Backgrounds/TreeLakeArielShot.webp");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100% !important;
+}
+
+/* ====================== Container Styles ===================== */
+
+.container, 
+.nexure-container, 
+.nexure-nav-container {
+    width:100% !important;
+    max-width: 95% !important;
+}
+
+/* ====================== Header Styles ===================== */
+
+.nexure-header {
+    position: fixed !important;
+    top:0 !important;
+    left:0;
+    width:100%;
+    padding-top:8px !important;
+    padding-bottom:8px !important;
+    background-color: rgba(245, 245, 247, 1);
+    border: 1px solid rgba(228, 227, 227, 1) !important;
+}
+
+#langPreference {
+    border-radius: 6px !important;
+}
+
+/* ====================== Login Content Styles ===================== */
+
+.nexure-login-section {
+    padding-top:8%;
+}
+
+.nexure-login-content {
+    background-color: #fff;
+    border:1px solid #ddd;
+    padding:20px;
+    border-radius:10px;
+    width:20%;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.square-logo {
+    width:80px !important;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.nexure-logo {
+    background-color: transparent !important;
+}
+
+.form-control {
+    margin-bottom: 4% !important;
+}
+
+.dark-mode .nexure-button.primary,
+.nexure-button.primary {
+    background: linear-gradient(135deg, #8bc2f0, #618fb5);
+    border: 1px solid #8bc2f0;
+    color: #000;
+    transition: all 0.3s ease;
+    padding:14px 24px !important;
+    border-radius: 8px !important;
+}
+
+.dark-mode .nexure-button.primary:hover,
+.nexure-button.primary:hover {
+    background: linear-gradient(135deg, #76aedd, #507a9b);
+    border: 1px solid #618fb5;
+    color: #000;
+}
+
+.nexure-button.secondary {
+    background: linear-gradient(135deg, #fff, #ddd);
+    border: 1px solid #ddd;
+    color: #000;
+    padding:14px 24px !important;
+    border-radius: 8px !important;
+    margin-left: 0px !important;
+}
+
+.nexure-button.secondary:hover {
+    background: linear-gradient(135deg, #eee, #ddd);
+    border: 1px solid #ddd;
+    color: #000
+}
+
+
+.after-login-area {
+    border-top:1px solid #ddd;
+    width: 100%;
+}
+
+.nexure-error-box,
+.nexure-register-link-box {
+    border: 0;
+    padding: 2%;
+    margin-top: 6%;
+    margin-bottom:6%;
+}
+
+.nexure-error-box {
+    background-color: #ffe7e7;
+    border-radius: 8px;
+}
+
+.nexure-login-sublink {
+    color: #363636;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.nexure-textbox {
+    border: 1px solid #ddd !important;
+    background-color: #f2f4f8 !important;
+    color: #000 !important;
+    border-radius: 8px !important;
+}
+
+.nexure-search-heading::placeholder {
+    color: #414141 !important;
+}
+
+.nexure-login-sublink a {
+    font-weight: 700;
+}
+
+.onboarding-button-container {
+    float: right;
+}
+
+.onboarding-button .tooltip-text {
+    visibility: hidden;
+    width: 120px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.onboarding-button .tooltip-text::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+.onboarding-button:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
+
+.check-box {
+    font-size: 15px;
+    border: 1px solid #ddd;
+    background-color: #f2f4f8;
+    border-radius: 3px;
+    padding: 5px;
+}
+
+.check-box:hover {
+    border: 1px solid #3978FF;
+    background-color: #F2F4F8;
+    transition: ease-in-out 0.3s all;
+}
+
+.onboarding-button {
+    border-radius: 50%;
+    border: 1px solid black;
+    width: 40px;
+    position: relative;
+    display: inline-block;
+    height: 40px;
+
+    float: right;
+}
+
+.onboarding-button:hover {
+    background-color: #000;
+    color: white;
+}
+
+.icon-container {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.icon-trash {
+    font-size: 24px;
+    color: #000;
+}
+
+.icon-overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    display: none;
+}
+
+.icon-container:hover .icon-overlay {
+    display: flex;
+}
+
+.industry-results::-webkit-scrollbar-track {
+    border-top-right-radius: 8px !important;
+    border-bottom-right-radius: 8px !important;
+}
+
+.industry-results {
+    border: 1px solid #ccc;
+    max-height: 200px;
+    overflow-y: auto;
+    padding: 5px;
+    margin-top: 5px;
+    border-radius: 8px;
+    background-color: #fff;
+    position: absolute;
+    display: none;
+}
+
+.industry-div {
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 12px !important;
+    transition: ease-in-out 0.3s all;
+}
+
+.industry-div:hover {
+    background-color: #f1f1f1 !important;
+}
+
+/* ====================== Opening of accounts and online-access Styles ===================== */
+
+.nexure-open-online-access-and-account {
+    margin-top:7%;
+}
+
+.nexure-card {
+    transform: none !important;
+    background: none !important;
+    background-color: #f2f3f4 !important;
+}
+
+.card-header {
+    padding-bottom:5px;
+    border-bottom: 1px solid #ddd !important;
+}
+
+.card-body {
+    padding-bottom:20px;
+}
+
+.card-footer {
+    padding-top:20px;
+    border-top: 1px solid #ddd !important;
+}
+
+.onboarding-card-link {
+    color:#000;
+}
+
+.onboarding-card-link:hover {
+    color:#000;
+}
+
+/* ====================== Generic System Styles ===================== */
+
+.generic-system-pages {
+    margin-top:2%;
+    margin-left:8%;
+}
+
+/* ====================== Footer Styles ===================== */
+
+.nexure-footer {
+    position: fixed;
+    bottom:0;
+    left:0;
+    width:100%;
+    padding-top:20px;
+    padding-bottom:20px;
+    z-index: 999 !important;
+    background-color: rgba(245, 245, 247, 1);
+    border-top: 1px solid rgba(228, 227, 227, 1) !important;
+}
+
+
+/* ====================== Dark Mode Styles ===================== */
+
+body.dark-mode {
+    background-color:rgb(0, 0, 0) !important;
+}
+
+.dark-mode .nexure-logo {
+    background-color: transparent !important;
+}
+
+.dark-mode .nexure-header {
+    background: rgba(25, 25, 30, 1) !important;
+    border: 1px solid rgba(46, 46, 46, 1) !important;
+    box-shadow: none !important;
+}
+
+.dark-mode a {
+    color:#dbdbdb;
+}
+
+.dark-mode a:hover {
+    color:#fff;
+}
+
+.dark-mode .brand-link {
+    color: #60b3f7
+}
+
+.dark-mode .brand-link:hover {
+    color: #1584e0
+}
+
+.dark-mode .gray-100 {
+    color:#d6d6d6 !important;
+}
+
+.dark-mode .nexure-footer {
+    background: rgba(25, 25, 30, 1) !important;
+    border-top: 1px solid rgba(46, 46, 46, 1) !important;
+    box-shadow: none !important;
+}
+.dark-mode .nexure-login-content {
+    background-color: rgb(26, 26, 26) !important;
+    border: 1px solid #333;
+}
+
+.dark-mode .after-login-area {
+    border-top:1px solid #444;
+}
+
+.dark-mode .industry-results {
+    background-color: #000;
+    border: 1px solid #222;
+}
+
+.dark-mode .industry-div:hover {
+    background-color: rgba(149, 157, 165, 0.2) !important;
+}
+
+.dark-mode .nexure-textbox {
+    border: 1px solid #333 !important;
+    background-color: #292929 !important;
+    color: #dbdbdb !important;
+}
+
+.dark-mode .nexure-search-heading::placeholder {
+    color: #cecece !important;
+}
+
+.dark-mode .onboarding-button {
+    border: 1px solid #fff;
+    background-color: #000;
+    color: #fff;
+}
+
+.dark-mode .onboarding-button:hover {
+    background-color: #fff;
+    color: #000;
+}
+
+.dark-mode .nexure-button.secondary {
+    background: linear-gradient(135deg, #050505, #222);
+    border: 1px solid #222;
+    color: #dbdbdb;
+    border-radius: 8px !important;
+    padding:14px 24px !important;
+}
+
+.dark-mode .nexure-button.secondary:hover {
+    background: linear-gradient(135deg, #111, #333);
+    border: 1px solid #333;
+    color: #dbdbdb
+}
+
+.dark-mode .card-header {
+    border-bottom: 1px solid #222 !important;
+}
+
+.dark-mode .card-footer {
+    border-top: 1px solid #222 !important;
+}
+
+.dark-mode .nexure-card {
+    background: none !important;
+    background-color: #161616 !important;
+}
+
+.dark-mode .onboarding-card-link {
+    color:#dbdbdb;
+}
+
+.dark-mode .onboarding-card-link:hover {
+    color:#dbdbdb;
+}
+
+.dark-mode .license-text-dark {
+    color: #dbdbdb !important;
+}
+
+@media (min-width: 1299px) and (max-width: 1800px) {
+    .nexure-login-content {
+        width:25%;
+    }
+}
+
+@media (max-width: 1298px) {
+    .nexure-login-content {
+        width:50%;
+    }
+}
+
+@media (min-width: 1000px) and (max-width: 1297px) {
+    .nexure-login-content {
+        width:30%;
+    }
+}
+
+@media (max-width: 999px) {
+    .nexure-login-content {
+        width:80%;
+    }
+
+    .nexure-login-section {
+        margin-top:20%;
+    }
+}
