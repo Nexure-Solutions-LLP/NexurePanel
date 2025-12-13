@@ -48,6 +48,9 @@ error_reporting(E_ALL);
     $CurrentOnlineAccessAccount->GatherUserAccounts($con, $nexureid);
     $CurrentOnlineAccessAccount->loadRiskScore($con, $nexureid);
 
+    $PayrollHandler = new \NexureSolutions\Payroll\EmployeeHandler;
+    $PayrollHandler->GatherEmployeeInformation($con, $nexureid);
+
     $account = !empty($CurrentOnlineAccessAccount->userAccounts) ? $CurrentOnlineAccessAccount->userAccounts[0] : null;
 
     // Mobile Detection

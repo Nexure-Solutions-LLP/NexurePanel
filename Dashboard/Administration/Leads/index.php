@@ -36,6 +36,23 @@
                     <div class="card-body">
                         <div class="dashboard-table">
 
+                            <?php
+
+                                renderListingTable(
+                                    $con,
+                                    'leads',
+                                    ['Title', 'Name', 'Email', 'Phone', 'Status', 'Last Activity', 'Actions'],
+                                    ['leadTitle', 'leadName', 'leadEmail', 'leadPhoneNumber', 'leadStatus', 'lastActivity'],
+                                    ['15%', '15%', '15%', '10%', '10%', '15%'],
+                                    [
+                                        'View' => "/dashboard/administration/leads/manageLeads/?tasks_id={taskID}",
+                                        'Edit' => "/dashboard/administration/leads/editLeads/?tasks_id={taskID}",
+                                        'Delete' => "openModal('deleteTasks({taskID})')"
+                                    ]
+                                );
+
+                            ?>
+
                         </div>
                     </div>
                 </div>

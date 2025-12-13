@@ -16,7 +16,7 @@
                     <img src="/Assets/img/SystemImages/Icons/suspendedicon.png" style="height:30px; width:30px;" />
                 </div>
                 <div>
-                    <h6 class="secondary-font" style="font-weight:300; font-size:25px; margin:0; padding:0; margin-top:4%; margin-bottom:3%;"><?php echo $LANG_SUSPENDEDONLINEACCESS_TITLE; ?></h6>
+                    <h6 class="secondary-font font-bold" style="font-weight:300; font-size:25px; margin:0; padding:0; margin-top:4%; margin-bottom:3%;"><?php echo $LANG_SUSPENDEDONLINEACCESS_TITLE; ?></h6>
                     <p class="nexure-login-sublink license-text-dark width-80" style="margin-bottom:2%;"><?php echo $LANG_SUSPENDEDONLINEACCESS_SUBTEXT; ?></p>
                     <p class="nexure-login-sublink license-text-dark width-100" style="margin-bottom:3%;"><?php echo $LANG_SUSPENDEDONLINEACCESS_CONTACTINFO_SUBTEXT; ?></p>
                 </div>

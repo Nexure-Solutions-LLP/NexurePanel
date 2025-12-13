@@ -3,24 +3,23 @@
     // Nexure Portal Version 25.0.10
     // Default Language file for United States English
 
-    // (C) Nexure Solutions 2025 - All credit goes to the original 
-    // authors.
+    // (C) Nexure Solutions 2025 - Do not copy or reproduce.
 
     // This is the Default Lang File and will be overwritten
     // when the panel updates. To prevent this and customize
-    // this file please create a folder called overrides in
-    // the lang directory and copy this file into that new
+    // this file please create a folder called overwrites in
+    // the language directory and copy this file into that new
     // folder.
 
     // What you are about to do is edit all the possible word 
     // combinations for each page.
 
-    // ====================== START LOGIN LANGUAGE AREA ==========================
+    // ====================== START LOGIN LANGUAGE AREA ======================
 
     // Login Page Text Specifications
 
     $LANG_LOGIN_PASSWORD = "Password";
-    $LANG_LOGIN_AUTH_ERROR_TITLE = "Incorrect Credentials.";
+    $LANG_LOGIN_AUTH_ERROR_TITLE = "Access Denied.";
     $LANG_BUTTON_BACK = "Go Back";
     $LANG_LOGIN_BUTTON = "Continue";
     $LANG_LOGIN_DISCORD_BUTTON = "Sign In with Discord";
@@ -29,7 +28,7 @@
     $LANG_LOGIN_GITHUB_BUTTON = "Sign In with GitHub";
     $LANG_LOGIN_APPLE_BUTTON = "Sign In with Apple";
 
-    // ====================== START DASHBOARD LANGUAGE AREA ==========================
+    // ====================== START DASHBOARD LANGUAGE AREA ======================
 
     // Personal Dashboard Overview Page Text Specifications
 
@@ -47,7 +46,7 @@
     $LANG_OPENNEWACCOUNT_TILE = "Open an account";
     $LANG_OPENNEWACCOUNT_SUBTEXT = "Open a new account to get started with using ".$VariableDefinitionHandler->organizationShortName.".";
 
-    // ====================== START ERROR HANDLING LANGUAGE AREA ==========================
+    // ====================== START ERROR HANDLING LANGUAGE AREA ======================
 
     $LANG_GENERICERROR_TITLE = "We have encountered an unexpected error.";
     $LANG_GENERICERROR_SUBTEXT = "The ".$VariableDefinitionHandler->organizationShortName." CRM System has encountered an unrecoverable error. We understand generic errors are not helpful we have logged the error output below for your system administrator.";
@@ -60,5 +59,18 @@
     $LANG_UNDERREVIEWACCOUNT_SUBTEXT = "Your account application is under review. Our underwriters need more time to open this account. We will reach out via email with the results of the application. We thank you for your interest in ".$VariableDefinitionHandler->organizationShortName.".";
     $LANG_MOBILEEXPERIANCE_TITLE = "Oh! You tried to access the system from your mobile device.";
     $LANG_MOBILEEXPERIANCE_SUBTEXT = "For the best experience please use a laptop or desktop computer, If you wish to continue on your mobile device download our app.";
+
+    // ====================== Errors Text Specifications ======================
+
+    $LANG_BANNED_TITLE = "Hmmm. Your network seems a little unusual. We have banned your IP for security.";
+    $LANG_BANNED_TEXT = "We cant verify the authenticity of this visit. We have banned this IP. Please disable any VPNs, browser extensions, or ad blockers, and try your request again. This is an automated process.";
+    $LANG_RATELIMIT_ERROR_TITLE = "We rate limited you for our protection.";
+    $LANG_RATELIMIT_ERROR_TEXT = "The action you performed was done too quickly and our systems arent able to process the second request. We cant work that fast! Please try again in 5 seconds. If you need assistance please contact Nexure.";
+    $LANG_FORBIDDEN_TITLE = "403 | The page you were looking for is forbidden.";
+    $LANG_FORBIDDEN_SUBTEXT = "The page you accessed is protected and your forbidden to access it. We have logged this attempt to block ones like this. Use the back arrow in your browser to return to what you were doing.";
+    $LANG_SERVERERROR_TITLE = "";
+    $LANG_SERVERERROR_SUBTEXT = "";
+    $LANG_NOTFOUND_TITLE = "404 | The page you were looking for is not found.";
+    $LANG_NOTFOUND_SUBTEXT = "We looked everywhere for that page but it was not found. Check with the website administrator to ensure you have the right URL. Use the back arrow in your browser to return to what you were doing.";
 
 ?>

@@ -31,6 +31,10 @@ body {
     font-weight: bold;
 }
 
+.font-bold {
+    font-weight :700 !important;
+}
+
 .font-24px {
     font-size: 24px;
 }
@@ -133,6 +137,10 @@ body {
     align-items: start; /* Important: prevents stretching */
 }
 
+.account-grid-modified {
+    -ms-grid-columns: 1.5fr .5fr;
+    grid-template-columns: 1.5fr .5fr;
+}
 /* ====================== Header Styles ===================== */
 
 .nexure-header {
@@ -236,8 +244,11 @@ body {
 }
 
 .dropdown a {
-    padding: 14px 8px !important;
     border-radius: 4px;
+}
+
+.dropdown a:hover {
+    background-color: transparent !important;
 }
 
 .dropdown li:hover {
@@ -250,7 +261,7 @@ body {
 
 .nav-links-clickable,
 .nav-links-clickable:hover {
-    background: none !important;
+    background-color: none !important;
 }
 
 /* ====================== Section Styles ===================== */
@@ -262,6 +273,7 @@ body {
 
 .nexure-card {
     padding:20px !important;
+    border-radius: 10px;
     transform: none !important;
     background: none !important;
     background-color: #f2f3f4 !important;
@@ -311,6 +323,10 @@ body {
     padding:10px;
     border-radius: 6px;
     color: rgb(252, 79, 79);
+}
+
+.nexure-pricing-bar {
+    box-shadow: none;
 }
 
 /* ====================== Table Styles ===================== */
@@ -529,6 +545,11 @@ body {
     color: #999;
 }
 
+.dropdown li .nav-links-clickable,
+.dropdown li .nav-links-clickable:hover {
+    background-color: none !important;
+}
+
 /* ====================== Dark Mode Styles ===================== */
 
 body.dark-mode {
@@ -675,7 +696,7 @@ body.dark-mode {
 .dark-mode .nav-links-clickable,
 .dark-mode .nav-links-clickable:hover {
     color: #DBDBDB !important;
-    background: none !important;
+    background: transparent !important;
 }
 
 .dark-mode .dropdown {
@@ -697,6 +718,10 @@ body.dark-mode {
     background: linear-gradient(135deg, #111, #333);
     border: 1px solid #333;
     color: #dbdbdb
+}
+
+.dark-mode .filter-white-on-dark {
+    filter: invert(1) !important;
 }
 
 /* ====================== Mobile Styles ===================== */

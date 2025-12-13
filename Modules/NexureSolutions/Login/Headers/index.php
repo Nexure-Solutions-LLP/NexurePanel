@@ -27,7 +27,32 @@
 
     Note from Developer: 
 
-    
+        What a year we had for 2025. It has passed just as fast as it has come and it left us all with a little
+        something to remember, some good, some bad, and everything in between. 2025 was a year that created
+        memories and it should be a year that isn't forgotten.
+
+        This is the one year anniversary update for Nexure since its creation an idea that was made exactly 
+        one year ago. I want to thank everyone who has supported us entirely during this mission.
+
+        I want to thank Mikey, Logan, Tiquio, Alexis, Trey, and lastly Emma for supporting us 
+        on this journey while Nexure has been created, Alexis with Nexure's original idea during our 
+        relationship, Mikey for taking it to the next level with assets and operational expertise, Logan for 
+        expanding our systems, infrastructure and breaking the rules on boundaries to make Nexure an innovative 
+        company rather one that just stays stuck in the past, Tiquio for investing money, time and guidance 
+        even when things got hard for us, Trey for getting Nexure out of those times where we thought "oh no
+        we have done it now" moments. Before I end off this big thank you, there is someone we forgot...
+
+        Emma, while we haven't known each other long, the moment I met you, you knew everything about this company,
+        you researched it, learned about it and remembered it, while I may have known you for a short time, and
+        while we haven't talked much, in the few interactions we have had, you have shown while you can be serious
+        and protective, you are also intelligent, resourceful and genuinely a kind and caring person, even if you
+        sometimes may not want to show it, or may not be able to show it, and for that, you earned a special 
+        message in these developer notes. You will go on to do amazing things, and everyone here at Nexure is
+        sure of it. Love Nick.
+
+        Finally before I close this long message off, I want to remind everyone, with the right people supporting
+        you and the courage to learn, you can build your dream, chase after what you want, build something that's
+        of value, where you can look back and say "I built that". That's the power of freedom.
 
     Designed and Developed by Nexure in Pennsylvania.
 
@@ -52,7 +77,7 @@
         <meta name="countryCode" content="us"/>
         <meta name="focusArea" content="No Contact Module"/>
         <link rel="canonical" href="https://nexuresolutions.com/"/>
-        <link href="https://beta.nexuresolutions.com/assets/css/v2/2025-15-06-styling.css" rel="stylesheet" type="text/css" />
+        <link href="https://cdn.nexuresolutions.com/content/assets/css/v2/2025-15-06-styling.css" rel="stylesheet" type="text/css" />
         <link rel="stylesheet" href="/Assets/css/2025-login-css-v2.css" />
 
         <?php 

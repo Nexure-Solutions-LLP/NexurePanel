@@ -1,6 +1,7 @@
 <?php
 
     $PageTitle = "Blacklister Services";
+    $PageType = "Administration";
 
     unset($_SESSION['verification_code']);
 

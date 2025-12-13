@@ -773,6 +773,99 @@
 
     }
 
+    namespace NexureSolutions\Payroll {
+
+        use Exception;
+
+        class EmployeeHandler
+        {
+            public $department;
+            public $position;
+            public $pay_rate;
+            public $hours_worked;
+            public $hire_date;
+            public $term_date;
+            public $rehire_date;
+            public $status;
+            public $reason;
+            public $employment_type;
+            public $contract_link;
+            public $extension;
+            public $employee_id;
+            public $system_flag;
+            public $displayName;
+            public $accessLevel;
+            public $user_id;
+
+            public function __construct() {
+                // No DB in constructor (matches AccountHandler)
+            }
+
+            public function GatherEmployeeInformation(\mysqli $con, string $email): void
+            {
+
+                try {
+
+                    $stmt = $con->prepare("
+                        SELECT 
+                            p.*, 
+                            u.displayName,
+                            u.accessLevel,
+                            u.id AS user_id
+                        FROM nexure_users u
+                        INNER JOIN nexure_payroll p
+                            ON p.email = u.email
+                        WHERE u.email = ?
+                        AND u.accessLevel != 'Customer'
+                        LIMIT 1
+                    ");
+
+                    if (!$stmt) {
+
+                        throw new Exception("Prepare failed: " . $con->error);
+
+                    }
+
+                    $stmt->bind_param("s", $email);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+                    $row = $result->fetch_assoc();
+                    $stmt->close();
+
+                    if (!$row) {
+
+                        return;
+
+                    }
+
+                    // Assign each value to the class object like your AccountHandler
+
+                    foreach (array_keys(get_object_vars($this)) as $prop) {
+
+                        if (isset($row[$prop])) {
+
+                            $this->$prop = $row[$prop];
+
+                        }
+
+                    }
+
+                } catch (Exception $e) {
+
+                    if (class_exists('\Sentry')) {
+
+                        \Sentry\captureException($e);
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    }
+
     // ============= Start Additional Logic not relating to the middleware. ============= */
 
     namespace { 
@@ -789,6 +882,7 @@
 
         // Error Logging and Redirection
 
+        
 
         // IP Address Checking and Banning
 

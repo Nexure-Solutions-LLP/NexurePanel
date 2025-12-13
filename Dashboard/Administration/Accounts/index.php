@@ -29,13 +29,28 @@
                                 </div>
                             </div>
                             <div style="margin-top:-5px;">
-                                <a href="/Dashboard/Administration/Accounts/CreateAccount/" class="nexure-button primary no-margin margin-10px-right" style="padding:6px 24px;">Create Account</a>
+                                <a href="/Dashboard/Administration/Accounts/OpenAccount/" class="nexure-button primary no-margin margin-10px-right" style="padding:6px 24px;">Create Account</a>
                             </div>
                         </div>
                     </div>
                     <div class="card-body">
                         <div class="dashboard-table">
+                            <?php
 
+                                renderListingTable(
+                                    $con,
+                                    'accounts',
+                                    ['Account Number', 'Name', 'Email', 'Balance', 'Credit Limit', 'Type', 'Status', 'Date', 'Actions'],
+                                    ['accountNumber', 'displayName', 'email', 'balance', 'creditLimit', 'accountType', 'accountStatus', 'date'],
+                                    ['15%', '15%', '20%', '10%', '10%', '10%', '7%', '10%'],
+                                    [
+                                        'View' => "/Dashboard/Administration/Accounts/ManageAccount/?account_number={accountNumber}",
+                                        'Edit' => "/Dashboard/Administration/Accounts/EditAccount/?account_number={accountNumber}",
+                                        'Delete' => "openModal('deleteAccount({accountNumber})')"
+                                    ]
+                                );   
+
+                            ?>
                         </div>
                     </div>
                 </div>

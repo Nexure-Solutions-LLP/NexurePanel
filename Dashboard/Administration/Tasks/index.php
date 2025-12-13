@@ -36,6 +36,23 @@
                     <div class="card-body">
                         <div class="dashboard-table">
 
+                            <?php
+
+                                renderListingTable(
+                                    $con,
+                                    'tasks',
+                                    ['Title', 'Description', 'Actions'],
+                                    ['taskTitle', 'taskDescription', 'status'],
+                                    ['15%', '15%', '15%', '15%'],
+                                    [
+                                        'View' => "/dashboard/administration/tasks/manageTask/?task_id={taskID}",
+                                        'Edit' => "/dashboard/administration/tasks/editTask/?task_id={taskID}",
+                                        'Delete' => "openModal('deleteTask({taskID})')"
+                                    ]
+                                );
+
+                            ?>
+
                         </div>
                     </div>
                 </div>

@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const year = date.getFullYear();
 
-        return `${timePart} ${month} ${day}, ${year}`;
+        return `${month} ${day}, ${year} ${timePart}`;
 
     }
 
@@ -122,6 +122,45 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+
+// ====================== Account Opening Business Account Type Form Fields ======================
+
+document.addEventListener("DOMContentLoaded", function() {
+    
+    const accountTypeSelect = document.querySelector('select[name="accounttype"]');
+
+    const businessInfoSection = document.querySelectorAll('.background-grey-100.margin-bottom-20px.margin-top-30px, .nexure-grid.nexure-three-grid.no-row-gap.width-100');
+
+    const businessHeader = Array.from(businessInfoSection).find(el => 
+        el.querySelector && el.querySelector('p') && el.querySelector('p').textContent.trim().toLowerCase() === 'business information'
+    );
+
+    if (!businessHeader) return;
+
+    const businessFormGrid = businessHeader.nextElementSibling;
+
+    businessHeader.style.display = 'none';
+
+    businessFormGrid.style.display = 'none';
+
+    accountTypeSelect.addEventListener('change', function() {
+
+        if (this.value.toLowerCase() === 'business') {
+
+            businessHeader.style.display = '';
+            businessFormGrid.style.display = '';
+
+        } else {
+
+            businessHeader.style.display = 'none';
+            businessFormGrid.style.display = 'none';
+
+        }
+
+    });
+
+});
+
 
 // ====================== Dashboard Time of Day Text ======================
 

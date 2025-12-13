@@ -106,6 +106,7 @@
             }
 
             echo '<li class="nav-links"><a href="/Modules/NexureSolutions/DomainManagement/CheckDomains" class="nav-links-clickable">Domain Search</a></li>';
+            echo '<li class="nav-links"><a href="/Modules/NexureSolutions/FinancialServices/RunCredit" class="nav-links-clickable">Run Credit Check</a></li>';
             echo '<li class="nav-links"><a href="/Dashboard/Administration/Settings" class="nav-links-clickable">System Settings</a></li>';
             echo '<li class="nav-links"><a href="/Dashboard/Administration/Email" class="nav-links-clickable">Corporate Email</a></li>';
 

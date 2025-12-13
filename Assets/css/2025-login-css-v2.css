@@ -66,6 +66,10 @@ a:hover {
     font-size: 10px !important;
 }
 
+.font-bold {
+    font-weight :700 !important;
+}
+
 .login-background {
     background-image: url("/Assets/img/SystemImages/Backgrounds/TreeLakeArielShot.webp");
     background-position: center;
@@ -339,6 +343,7 @@ a:hover {
 .nexure-card {
     transform: none !important;
     background: none !important;
+    border-radius: 10px;
     background-color: #f2f3f4 !important;
 }
 

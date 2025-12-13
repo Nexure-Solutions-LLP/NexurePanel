@@ -36,6 +36,23 @@
                     <div class="card-body">
                         <div class="dashboard-table">
 
+                            <?php
+
+                                renderListingTable(
+                                    $con,
+                                    'users',
+                                    ['Name', 'Email', 'Role', 'Type', 'Status', 'First Interaction Date', 'Last Interaction Date', 'Actions'],
+                                    ['displayName', 'email', 'accessLevel', 'accountType', 'onlineAccessStatus', 'firstInteractionDate', 'lastInteractionDate'],
+                                    ['15%', '18%', '10%', '8%', '8%', '15%', '15%'],
+                                    [
+                                        'View' => "/Dashboard/Administration/Contacts/ManageContact/?nexure_id={email}",
+                                        'Edit' => "/Dashboard/Administration/Accounts/EditAccount/?nexure_id={email}",
+                                        'Delete' => "openModal('deleteContact({email})')"
+                                    ]
+                                );   
+
+                            ?>
+
                         </div>
                     </div>
                 </div>
