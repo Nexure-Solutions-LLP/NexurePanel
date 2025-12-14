@@ -22,34 +22,15 @@ EMMIE is built to scale from small teams to telecom-grade enterprises while rema
 ## Core Capabilities
 
 - **Enterprise Dashboard**  
-  Centralized visibility into business operations, financial activity, automation status, and system health.
-
 - **CRM & Customer Lifecycle Management**  
-  Track customers, leads, accounts, communications, and operational history across teams and services.
-
 - **Payroll & Financial Operations**  
-  Payroll processing, payments, financing, merchant services, and monetary workflows — all managed from one platform.
-
 - **Analytics & Reporting**  
-  Actionable insights across operational, financial, and customer data.
-
 - **Automation Engine**  
-  Trigger-based workflows, scheduled jobs, and system-level automations designed for real-world business execution — not just reporting.
-
 - **Risk & Trust Signals**  
-  Host reputation analysis, monitoring, and fraud-adjacent intelligence layers.
-
 - **Third-Party Integrations**  
-  Native and extensible integrations including Discord, Twilio, and external APIs.
-
 - **Fully Modular Architecture**  
-  Enable only what you need. Extend with custom or prebuilt modules.
-
 - **Themes & Customization**  
-  Configurable UI themes and interface customization.
-
 - **Multi-Industry Ready**  
-  Designed to support industries ranging from accounting and finance to telecommunications, cloud computing, automotive, and web services.
 
 ---
 
