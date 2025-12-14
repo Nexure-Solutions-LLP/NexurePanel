@@ -124,7 +124,7 @@
 
                 $this->organizationID = $this->PanelConfigurationInformation['organizationID'] ?? null;
 
-                $this->registrationDisabledMessage = $this->PanelConfiguratioInformation['registrationDisabledMessage'] ?? null;
+                $this->registrationDisabledMessage = $this->PanelConfigurationInformation['registrationDisabledMessage'] ?? null;
 
                 $this->maintenanceEnabledMessage = $this->PanelConfigurationInformation['maintenanceEnabledMessage'] ?? null;
 
@@ -383,7 +383,7 @@
 
                 $this->emailverifystatus = ucfirst($this->OnlineAccessInformation['emailStatus'] ?? 'Unknown');
 
-                $this->riskScoreMonitoring = ucfirst($this->OnlineAccessInformation['riskScoreMonitoring']);
+                $this->riskScoreMonitoring = ucfirst($this->OnlineAccessInformation['riskScoreMonitoring'] ?? '——');
 
             }
 
@@ -538,7 +538,10 @@
 
                             $stripe = initStripe($con);
 
-                            $creditBalance = getCreditBalance($stripe, $this->paymentID);
+                            if (!empty($this->paymentID)) {
+                                $creditBalance = getCreditBalance($stripe, $this->paymentID);
+                                $balanceInfo['credit'] += (float)$creditBalance;
+                            }
 
                             $balanceInfo['credit'] += $creditBalance;
                                 
@@ -589,8 +592,6 @@
                 $accountResult = $accountStmt->get_result();
 
                 $accountDetails = $accountResult->fetch_assoc();
-
-                
 
                 $accountStmt->close();
 
@@ -653,6 +654,42 @@
                 
                 $balance = 0.0;
 
+                $stmt = $con->prepare("SELECT email FROM nexure_accounts WHERE accountNumber = ? LIMIT 1");
+
+                $stmt->bind_param("s", $accountNumber);
+
+                $stmt->execute();
+
+                $result = $stmt->get_result();
+                
+                $row = $result->fetch_assoc();
+
+                $stmt->close();
+
+                $userEmail = $row['email'] ?? null;
+
+                if ($userEmail) {
+
+                    $stmt = $con->prepare("SELECT paymentID FROM nexure_users WHERE email = ? LIMIT 1");
+
+                    $stmt->bind_param("s", $userEmail);
+
+                    $stmt->execute();
+
+                    $result = $stmt->get_result();
+
+                    $userRow = $result->fetch_assoc();
+
+                    $stmt->close();
+
+                    $this->paymentID = $userRow['paymentID'] ?? null;
+
+                } else {
+
+                    $this->paymentID = null;
+
+                }
+
                 foreach ($processors as $processor) {
 
                     $filePath = $_SERVER["DOCUMENT_ROOT"]."/Modules/{$processor}/Payments/Backend/index.php";
@@ -663,7 +700,10 @@
 
                         $stripe = initStripe($con);
 
-                        $creditBalance = getCreditBalance($stripe, $this->paymentID);
+                        if (!empty($this->paymentID)) {
+                            $creditBalance = getCreditBalance($stripe, $this->paymentID);
+                            $balanceInfo['credit'] += (float)$creditBalance;
+                        }
 
                         $balanceInfo['credit'] += $creditBalance;
                             
@@ -766,6 +806,36 @@
                 $roleEnum = \userRole::fromString($requestedUserRole);
 
                 return $roleEnum?->name ?? null;
+
+            }
+
+            public function LoadFullCustomerAccount(\mysqli $con, string $accountNumber): void {
+
+                $stmt = $con->prepare("SELECT email FROM nexure_accounts WHERE accountNumber = ? LIMIT 1");
+
+                $stmt->bind_param("s", $accountNumber);
+
+                $stmt->execute();
+
+                $result = $stmt->get_result();
+
+                $row = $result->fetch_assoc();
+
+                $stmt->close();
+
+                $userEmail = $row['email'] ?? null;
+
+                if ($userEmail) {
+ 
+                    $this->GatherOnlineAccessInformation($con, $userEmail);
+
+                    $this->loadRiskScore($con, $userEmail);
+
+                }
+
+                $this->GatherSingleAccountDetails($con, $accountNumber);
+
+                $this->GatherUserAccounts($con, $userEmail);
 
             }
 

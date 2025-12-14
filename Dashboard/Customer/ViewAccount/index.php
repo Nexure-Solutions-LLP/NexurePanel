@@ -189,7 +189,7 @@
             <h6 style="font-size:16px; font-weight:800; padding:0; margin:0;">Pay account balance?</h6>
             <div style="font-size:14px; padding-top:30px; padding-bottom:30px;">
                 <div class="form-control">
-                    <input class="nexure-textbox grey-400" id="balanceNumber" type="numeric" maxlenghth="10" name="balanceNumber" style="width:25%;" placeholder="65.00" />
+                    <span class="margin-right-10px">$</span> <input class="nexure-textbox grey-400" id="balanceNumber" type="numeric" maxlenghth="10" name="balanceNumber" style="width:25%;" placeholder="65.00" />
                 </div>
             </div>
             <p style="font-size:14px; padding-bottom:10px;">Please specify how much you would like to pay. Payments will post immediatly, you may need to refresh the page if the balance does not update.</p>

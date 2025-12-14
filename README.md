@@ -1,4 +1,4 @@
-## Nexure Panel
+## Nexure EMMIE (Enterprise Management, Monetary & Intelligence Engine)
 
 This is the official repository for Nexure Panel that will run virtually every modern business out there with a completely modulated experience.
 
@@ -55,7 +55,7 @@ This is the official repository for Nexure Panel that will run virtually every m
 
 This panel is still in development so the install script has not been built yet. This panel will be opened to Developer and Public Testing.
 
-You can view a demo link [here](https://us-east-1.nexure-cloud-compute-15-204-176-210.nexuresolutions.com/).
+You can view a demo link [here](https://us-east-1.nexure-cloud-compute-130-12-30-4.nexuresolutions.com/).
 
 ---
 
@@ -75,7 +75,7 @@ You can view a demo link [here](https://us-east-1.nexure-cloud-compute-15-204-17
 
 ### Installation
 
-1. Clone the repository: `bash git clone https://github.com/Nexure-Solutions-LLC/NexurePanel.git`
+1. Clone the repository: `bash git clone https://github.com/Nexure-Solutions-LLP/NexurePanel.git`
 2. Install the panel by running the install.sh bash script.
 3. Run post installation by navigating to the panels domain then the folder /Install
 4. Configure the panel and set credentials in the .ENV file.

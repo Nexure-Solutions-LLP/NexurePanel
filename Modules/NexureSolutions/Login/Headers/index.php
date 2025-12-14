@@ -144,7 +144,7 @@
                 <div class="display-flex align-center">
                     <div class="nexure-branding">
                         <a href="https://nexuresolutions.com/" class="text-neutral">
-                            <span><?php echo $VariableDefinitionHandler->organizationShortName; ?></span> | <span class="font-bold">CRM Cloud</span>
+                            <span><?php echo $VariableDefinitionHandler->organizationShortName; ?></span> | <span class="font-bold">EMMIE®</span>
                         </a>
                     </div>
                     <div class="nexure-navbar-menu" id="nexure-navbar-js"></div>

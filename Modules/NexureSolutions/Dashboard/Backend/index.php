@@ -1,5 +1,4 @@
 <?php
-
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -19,6 +18,12 @@ error_reporting(E_ALL);
     use Detection\MobileDetect;
     use Stripe\Stripe;
 
+    $VariableDefinitionHandler = new \NexureSolutions\Generic\VariableDefinitions();
+    $CurrentOnlineAccessAccount =  new \NexureSolutions\Accounts\AccountHandler($con);
+    $CurrentAccountExamination = new \NexureSolutions\Accounts\AccountHandler($con);
+    $PayrollHandler = new \NexureSolutions\Payroll\EmployeeHandler;
+    $NexureModuleHandler = new \NexureSolutions\Modules\NexureModules;
+
     // Sentry Setup
 
     \Sentry\init([
@@ -37,18 +42,12 @@ error_reporting(E_ALL);
 
     // Middleware Calls
 
-    $VariableDefinitionHandler = new \NexureSolutions\Generic\VariableDefinitions();
     $VariableDefinitionHandler->GatherPanelConfiguration($con);
-
-    $NexureModuleHandler = new \NexureSolutions\Modules\NexureModules;
     $NexureModuleHandler->retrieveModules($con);
 
-    $CurrentOnlineAccessAccount =  new \NexureSolutions\Accounts\AccountHandler($con);
     $CurrentOnlineAccessAccount->GatherOnlineAccessInformation($con, $nexureid);
     $CurrentOnlineAccessAccount->GatherUserAccounts($con, $nexureid);
     $CurrentOnlineAccessAccount->loadRiskScore($con, $nexureid);
-
-    $PayrollHandler = new \NexureSolutions\Payroll\EmployeeHandler;
     $PayrollHandler->GatherEmployeeInformation($con, $nexureid);
 
     $account = !empty($CurrentOnlineAccessAccount->userAccounts) ? $CurrentOnlineAccessAccount->userAccounts[0] : null;
