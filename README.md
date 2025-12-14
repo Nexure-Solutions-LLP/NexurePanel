@@ -15,8 +15,6 @@
 
 Unlike traditional CRMs or analytics platforms, EMMIE functions as an **enterprise control plane**, unifying customer management, payroll, financial operations, communications, risk awareness, and automation into a single cohesive system.
 
-EMMIE is built to scale from small teams to telecom-grade enterprises while remaining extensible, secure, and developer-friendly.
-
 ---
 
 ## Core Capabilities
