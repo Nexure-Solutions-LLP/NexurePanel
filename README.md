@@ -57,24 +57,17 @@ Unlike traditional CRMs or analytics platforms, EMMIE functions as an **enterpri
 
 ## Authors & Contributors
 
-- **Nick Derry** — Lead Architect & Core Development  
-- **Mikey Brinkley** — Core Development  
-- **Mikey W¹** — Base system handler implementation  
-- **Joy Clens²** — Discord integration (partial)  
-- **AlexySSH³** — Discord integration (partial)
-
-¹ Authored the original base handler at  
-`/Modules/NexureSolutions/System/Handlers/index.php` (later refactored)
-
-² Contributed to Discord integration module  
-³ Contributed to Discord integration module
+- **Nick Derry**
+- **Mikey Brinkley**
+- **Treyten Sanders**
+- **Alfie Chadd**
+- **Mikey W**
 
 ---
 
 ## Project Status
 
-Nexure EMMIE is currently under development.  
-The automated installer is not finalized yet.
+Nexure EMMIE is currently under development. The automated installer is not finalized yet.
 
 The platform will be opened for **Developer Preview** and **Public Testing** prior to initial release.
 
