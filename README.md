@@ -11,7 +11,7 @@
 
 ## Overview
 
-**Nexure EMMIE** is the core intelligence and operational engine behind the Nexure Panel — designed to power virtually every aspect of a modern business through a **fully modular, automation-first architecture**.
+**Nexure EMMIE** is the core intelligence and operational engine behind Nexure and our clients its designed to power virtually every aspect of a modern business through a **fully modular, automation-first architecture**.
 
 Unlike traditional CRMs or analytics platforms, EMMIE functions as an **enterprise control plane**, unifying customer management, payroll, financial operations, communications, risk awareness, and automation into a single cohesive system.
 
