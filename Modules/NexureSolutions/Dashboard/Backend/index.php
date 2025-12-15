@@ -7,6 +7,7 @@ error_reporting(E_ALL);
 
     require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
     require($_SERVER["DOCUMENT_ROOT"] . '/Modules/NexureSolutions/System/Handlers/index.php');
+    require($_SERVER["DOCUMENT_ROOT"] . '/Authentication/index.php');
 
     ob_clean();
     ob_start();

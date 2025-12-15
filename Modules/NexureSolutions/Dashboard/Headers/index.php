@@ -79,10 +79,6 @@
             <link rel="canonical" href="https://nexuresolutions.com/"/>
             <link href="https://cdn.nexuresolutions.com/content/assets/css/v2/2025-15-06-styling.css" rel="stylesheet" type="text/css" />
             <link rel="stylesheet" href="/Assets/css/2025-dashboard-css-v2.css" />
-            <link rel="apple-touch-icon" sizes="180x180" href="https://beta.nexuresolutions.com/assets/img/favicon/apple-touch-icon.png">
-            <link rel="icon" type="image/png" sizes="32x32" href="https://beta.nexuresolutions.com/assets/img/favicon/favicon-32x32.png">
-            <link rel="icon" type="image/png" sizes="16x16" href="https://beta.nexuresolutions.com/assets/img/favicon/favicon-16x16.png">
-            <link rel="manifest" href="https://beta.nexuresolutions.com/assets/img/favicon/site.webmanifest">
             
             <?php 
             
@@ -93,6 +89,11 @@
                 }
 
             ?>
+
+            <link rel="apple-touch-icon" sizes="180x180" href="https://cdn.nexuresolutions.com/content/images/favicon/apple-touch-icon.png">
+            <link rel="icon" type="image/png" sizes="32x32" href="https://cdn.nexuresolutions.com/content/images/favicon/favicon-32x32.png">
+            <link rel="icon" type="image/png" sizes="16x16" href="https://cdn.nexuresolutions.com/content/images/favicon/favicon-16x16.png">
+            <link rel="manifest" href="https://cdn.nexuresolutions.com/content/images/favicon/site.webmanifest">
 
             <script type="text/javascript">   
                 window.antiFlicker = {

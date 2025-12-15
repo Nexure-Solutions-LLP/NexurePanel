@@ -30,63 +30,12 @@
 
 ?>
 
-    <title><?php echo $VariableDefinitionHandler->organizationShortName; ?> Unified Panel | <?php echo $PageTitle; ?></title>
+    <title>Emmie® by <?php echo $VariableDefinitionHandler->organizationShortName; ?> | <?php echo $PageTitle; ?></title>
 
 
     <section class="section dashboard">
         <div class="container nexure-container">
-            <div class="nexure-grid nexure-one-grid no-row-gap">
-                <div class="nexure-card">
-                    <div class="card-header">
-                        <div class="display-flex justify-content-space-between align-center padding-bottom-10px">
-                            <div class="display-flex align-center padding-bottom-10px">
-                                <div class="no-padding margin-right-20px icon-size-formatted">
-                                    <img src="/Assets/img/SystemImages/Icons/CustomerBusinessLogos/defaultstore.png" style="background-color:#ffe6e2;" class="client-business-andor-profile-logo" />
-                                </div>
-                                <div>
-                                    <p class="no-padding font-14px">Account</p>
-                                    <?php
-                                        $mostRecentAccount = $CurrentOnlineAccessAccount->userAccounts[0] ?? null;
-                                        $headerName = $mostRecentAccount['headerName'] ?? $VariableDefinitionHandler->organizationShortName.' ACCOUNT';
-                                    ?>
-                                    <h4 class="text-bold font-20px no-padding" style="padding-bottom:0px; padding-top:5px;"><?= htmlspecialchars($headerName) ?> - <?php echo $accountnumber; ?></h4>
-                                </div>
-                            </div>
-                            <div style="margin-top:-5px;">
-                                <a href="/Dashboard/Administration/Accounts/EditAccount/" class="nexure-button primary no-margin margin-5px-right" style="padding:6px 24px;">Edit</a>
-                                <a href="javascript:void(0)" onclick="openBalanceModal()" class="nexure-button secondary no-margin margin-5px-right" style="padding:6px 24px;">Alter Balance</a>
-                                <a href="javascript:void(0)" onclick="openPaymentModal()" class="nexure-button secondary no-margin margin-5px-right" style="padding:6px 24px;">Pay on Account</a>
-                                <a href="/Dashboard/Administration/Accounts/ViewAsOwner/" class="nexure-button secondary no-margin margin-5px-right" style="padding:6px 24px;">View as Owner</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body" style="padding-bottom:0;">
-                        <div class="display-flex align-center width-100 padding-20px">
-                            <?php
-
-                                $details = [
-                                    'Type' => ($accountDetails['accessLevel'] === 'Customer') ? 'Customer - Direct' : (($accountDetails['accessLevel'] === 'Partner') ? 'Partner - Affiliate' : '——'),
-                                    'Owner' => $CurrentAccountExamination->displayName,
-                                    'Credit Limit' => $account['creditLimit'].'<a href="javascript:void(0);" onclick="openCreditModal()" class="brand-link"> (Increase Limit)</a>',
-                                    'First Interaction' => $CurrentAccountExamination->firstinteractiondateformattedfinal,
-                                    'Last Interaction' => $CurrentAccountExamination->lastinteractiondateformattedfinal
-                                ];
-                                
-                                foreach ($details as $label => $value) {
-
-                                    echo "<div style='width:75%;'><p class='no-padding font-14px'>{$label}</p><p class='margin-top-10px font-14px' style='margin-bottom:0; padding-bottom:0;'>{$value}</p></div>";
-                                
-                                }
-
-                            ?>
-                            <div class="width-100">
-                                <p class="no-padding font-14px">Industry</p>
-                                <p class="no-padding font-14px"></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <?php include($_SERVER["DOCUMENT_ROOT"]."/Modules/NexureSolutions/Dashboard/Menus/Header/Account/index.php"); ?>
             <div class="nexure-grid nexure-two-grid no-row-gap margin-top-30px account-grid-modified">
                 <div>
                     <div class="nexure-card">
@@ -290,16 +239,16 @@
     <div id="paybalanceModal" class="modal">
         <div class="modal-content">
             <form method="POST" action="/Dashboard/Administration/Accounts/ChargeCustomer/?account_number=<?php echo $accountnumber; ?>">
-                <h6 style="font-size:16px; font-weight:800; padding:0; margin:0;">Pay customer account balance?</h6>
+                <h6 style="font-size:16px; font-weight:800; padding:0; margin:0;"><?php echo $LANG_DECREASE_BALANCE_TITLE; ?></h6>
                 <div style="font-size:14px; padding-top:30px; padding-bottom:30px;">
                     <div class="form-control">
                         <span class="margin-right-10px">$</span> <input class="nexure-textbox grey-400" id="balanceNumber" type="numeric" maxlenghth="10" name="balanceNumber" style="width:25%;" placeholder="65.00" />
                     </div>
                 </div>
-                <p style="font-size:14px; padding-bottom:30px;">Please do not include the currency, simply type the numeric value. This will deduct the balance on the account.</p>
+                <p style="font-size:14px; padding-bottom:30px;"><?php echo $LANG_DECREASE_BALANCE_CURRENCY_DISCLAIMER; ?></p>
                 <div style="display:flex; align-items:right; justify-content:right;">
-                    <button class="nexure-button primary" type="submit" name="submit">Submit Payment</button>
-                    <a class="nexure-button secondary" href="javascript:void(0)" onclick="closePaymentModal()">Close</a>
+                    <button class="nexure-button primary" type="submit" name="submit"><?php echo $LANG_DECREASE_BALANCE_BUTTON; ?></button>
+                    <a class="nexure-button secondary" href="javascript:void(0)" onclick="closePaymentModal()"><?php echo $LANG_CLOSE_MODAL_BUTTON; ?></a>
                 </div>
             </form>
         </div>
@@ -308,16 +257,16 @@
     <div id="creditLimitModal" class="modal">
         <div class="modal-content">
             <form method="POST" action="/Dashboard/Administration/Accounts/IncreaseLimit/?account_number=<?php echo $accountnumber; ?>">
-                <h6 style="font-size:16px; font-weight:800; padding:0; margin:0;">Increase customer's credit limit?</h6>
+                <h6 style="font-size:16px; font-weight:800; padding:0; margin:0;"><?php echo $LANG_INCREASE_CREDITLIMIT_TITLE ?></h6>
                 <div style="font-size:14px; padding-top:30px; padding-bottom:30px;">
                     <div class="form-control">
                         <span class="margin-right-10px">$</span> <input class="nexure-textbox grey-400" id="creditLimitNumber" type="numeric" maxlenghth="10" name="creditLimitNumber" style="width:25%;" placeholder="65.00" />
                     </div>
                 </div>
-                <p style="font-size:14px; padding-bottom:30px;">Please do not include the currency, simply type the numeric value. This will increase the credit limit on the account.</p>
+                <p style="font-size:14px; padding-bottom:30px;"><?php echo $LANG_INCREASE_CRDLMNT_CURRENCY_DISCLAIMER ?></p>
                 <div style="display:flex; align-items:right; justify-content:right;">
-                    <button class="nexure-button primary" type="submit" name="submit">Submit Credit Line Increase</button>
-                    <a class="nexure-button secondary" href="javascript:void(0)" onclick="closeCreditModal()">Close</a>
+                    <button class="nexure-button primary" type="submit" name="submit"><?php echo $LANG_INCREASE_CREDITLIMIT_BUTTON; ?></button>
+                    <a class="nexure-button secondary" href="javascript:void(0)" onclick="closeCreditModal()"><?php echo $LANG_CLOSE_MODAL_BUTTON; ?></a>
                 </div>
             </form>
         </div>
@@ -326,51 +275,22 @@
     <div id="setbalanceModal" class="modal">
         <div class="modal-content">
             <form method="POST" action="/Dashboard/Administration/Accounts/AlterBalance/?account_number=<?php echo $accountnumber; ?>">
-                <h6 style="font-size:16px; font-weight:800; padding:0; margin:0;">Increase customer account balance?</h6>
+                <h6 style="font-size:16px; font-weight:800; padding:0; margin:0;"><?php echo $LANG_INCREASE_BALANCE_TITLE; ?></h6>
                 <div style="font-size:14px; padding-top:30px; padding-bottom:30px;">
                     <div class="form-control">
                         <span class="margin-right-10px">$</span> <input class="nexure-textbox grey-400" id="balanceNumber" type="numeric" maxlenghth="10" name="balanceNumber" style="width:25%;" placeholder="65.00" />
                     </div>
                 </div>
-                <p style="font-size:14px; padding-bottom:30px;">Please do not include the currency, simply type the numeric value. This will increase the balance on the account.</p>
+                <p style="font-size:14px; padding-bottom:30px;"><?php echo $LANG_INCREASE_BALNCE_CURRENCY_DISCLAIMER; ?></p>
                 <div style="display:flex; align-items:right; justify-content:right;">
-                    <button class="nexure-button primary" type="submit" name="submit">Submit Balance Change</button>
-                    <a class="nexure-button secondary" href="javascript:void(0)" onclick="closeBalanceModal()">Close</a>
+                    <button class="nexure-button primary" type="submit" name="submit"><?php echo $LANG_INCREASE_BALANCECHANGE_BUTTON; ?></button>
+                    <a class="nexure-button secondary" href="javascript:void(0)" onclick="closeBalanceModal()"><?php echo $LANG_CLOSE_MODAL_BUTTON; ?></a>
                 </div>
             </form>
         </div>
     </div>
 
     <script>
-
-        var modalChangeBalance = document.getElementById("setbalanceModal");
-        var modalPayBalance = document.getElementById("paybalanceModal");
-        var modalCreditBalance = document.getElementById("creditLimitModal");
-
-        function openBalanceModal() {
-            modalChangeBalance.style.display = "block";
-        }
-
-        function closeBalanceModal() {
-            modalChangeBalance.style.display = "none";
-        }
-
-        function openPaymentModal() {
-            modalPayBalance.style.display = "block";
-        }
-
-        function closePaymentModal() {
-            modalPayBalance.style.display = "none";
-        }
-
-        function openCreditModal() {
-            modalCreditBalance.style.display = "block";
-        }
-
-        function closeCreditModal() {
-            modalCreditBalance.style.display = "none";
-        }
-
         window.nexureRiskScore = <?php echo isset($riskScore) ? (int)$riskScore : 0; ?>;
     </script>
 

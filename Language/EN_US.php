@@ -1,12 +1,12 @@
 <?php
 
-    // Nexure Portal Version 25.0.10
+    // Emmie Version 25.12.14
     // Default Language file for United States English
 
     // (C) Nexure Solutions 2025 - Do not copy or reproduce.
 
     // This is the Default Lang File and will be overwritten
-    // when the panel updates. To prevent this and customize
+    // when Emmie updates. To prevent this and customize
     // this file please create a folder called overwrites in
     // the language directory and copy this file into that new
     // folder.
@@ -49,7 +49,7 @@
     // ====================== START ERROR HANDLING LANGUAGE AREA ======================
 
     $LANG_GENERICERROR_TITLE = "We have encountered an unexpected error.";
-    $LANG_GENERICERROR_SUBTEXT = "The ".$VariableDefinitionHandler->organizationShortName." CRM System has encountered an unrecoverable error. We understand generic errors are not helpful we have logged the error output below for your system administrator.";
+    $LANG_GENERICERROR_SUBTEXT = "".$VariableDefinitionHandler->organizationShortName." EMMIE has encountered an unrecoverable error. We understand generic errors are not helpful we have logged the error output below for your system administrator.";
     $LANG_SUSPENDEDONLINEACCESS_TITLE = "We have suspended your account for suspicious activity.";
     $LANG_SUSPENDEDONLINEACCESS_SUBTEXT = "Your account at ".$VariableDefinitionHandler->organizationShortName." has been suspended. Please contact ".$VariableDefinitionHandler->organizationShortName." in order to resolve this issue. Your services have been suspended and cannot be accessed.";
     $LANG_SUSPENDEDONLINEACCESS_CONTACTINFO_SUBTEXT = "To resolve this issue, please call the number for your type of account. <br><br>For ".$VariableDefinitionHandler->organizationShortName." Retail Customers, call ".$VariableDefinitionHandler->organizationShortName." option 1. For ".$VariableDefinitionHandler->organizationShortName." Business Customers, call ".$VariableDefinitionHandler->organizationSupportInfo." option 2.";
@@ -72,5 +72,31 @@
     $LANG_SERVERERROR_SUBTEXT = "";
     $LANG_NOTFOUND_TITLE = "404 | The page you were looking for is not found.";
     $LANG_NOTFOUND_SUBTEXT = "We looked everywhere for that page but it was not found. Check with the website administrator to ensure you have the right URL. Use the back arrow in your browser to return to what you were doing.";
+
+    // ====================== Modals Text Specifications ======================
+
+    $LANG_INCREASE_CREDITLIMIT_TITLE = "Increase customer's credit limit?";
+    $LANG_INCREASE_BALANCE_TITLE = "Increase customer's credit limit?";
+    $LANG_DECREASE_BALANCE_TITLE = "Pay customer account balance?";
+    $LANG_ACCOUNT_NUMBER_VIEWER_TITLE = "Full Account Number";
+    $LANG_CUSTOMER_PAYMENT_MODAL_TITLE = "Pay account balance?";
+    $LANG_INCREASE_BALNCE_CURRENCY_DISCLAIMER = "Please do not include the currency, simply type the numeric value. This will increase the balance on the account.";
+    $LANG_INCREASE_CRDLMNT_CURRENCY_DISCLAIMER = "Please do not include the currency, simply type the numeric value. This will increase the credit limit on the account.";
+    $LANG_DECREASE_BALANCE_CURRENCY_DISCLAIMER = "Please do not include the currency, simply type the numeric value. This will deduct the balance on the account.";
+    $LANG_ACCOUNT_NUMBER_VIEWER_DISCLAIMER = "This account number will be used to identify your account. Keep this number safe.";
+    $LANG_CUSTOMER_PAYMENT_MODAL_DISCLAIMER_ONE = "Please specify how much you would like to pay. Payments will post immediatly, you may need to refresh the page if the balance does not update.";
+    $LANG_CUSTOMER_PAYMENT_MODAL_DISCLAIMER_TWO = "NOTE: You can make a payment larger than the balance if you want to prepay for services.";
+    $LANG_CUSTOMER_PAYMENT_MODAL_DISCLAIMER_THREE = "Please do not include the currency, simply type the numeric value.";
+    $LANG_INCREASE_CREDITLIMIT_BUTTON = "Submit Credit Line Increase";
+    $LANG_INCREASE_BALANCECHANGE_BUTTON = "Submit Balance Change";
+    $LANG_DECREASE_BALANCE_BUTTON = "Submit Payment";
+
+    $LANG_CLOSE_MODAL_BUTTON = "Close";
+
+    // ====================== Panel About Text Specifications ======================
+
+    $PANEL_ABOUT_TITLE_PRODUCT_NAME = "Emmie® 25.12.14 Web Edition";
+    $PANEL_ABOUT_INFO = "Emmie® by Nexure is the core intelligence and operational engine behind Nexure and our clients its designed to power virtually every aspect of a modern business through a fully modular, automation-first architecture. Unlike traditional CRMs or analytics platforms, Emmie® functions as an enterprise control plane, unifying customer management, payroll, financial operations, communications, risk awareness, and automation into a single cohesive system.";
+    $PANEL_ABOUT_LICENSE_DISCLAIMER = "THE BASE CODE OF THIS SOFTWARE IS OPEN SOURCE AND FREE TO USE UNDER THE COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL). THE AUTHOR OF DERIVATIVE WORKS OF THIS SOFTWARE MUST NOTIFY NEXURE SOLUTIONS OF CHANGES. CERTAIN MODULES AND PAID VERSIONS OF THIS SOFTWARE WE DEVELOP ARE NOT OPEN SOURCE.";
 
 ?>

@@ -28,7 +28,7 @@
 
 ?>
 
-    <title><?php echo $VariableDefinitionHandler->organizationShortName; ?> Unified Panel | Business Account Application</title>
+    <title><?php echo $VariableDefinitionHandler->organizationShortName; ?> EMMIE® | Business Account Application</title>
 
     <section class="section nexure-open-online-access-and-account">
         <div class="container nexure-container">

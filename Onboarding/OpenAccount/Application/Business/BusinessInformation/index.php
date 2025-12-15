@@ -59,7 +59,7 @@
 
 ?>
 
-    <title><?php echo $VariableDefinitionHandler->organizationShortName; ?> Unified Panel | Business Account Application</title>
+    <title><?php echo $VariableDefinitionHandler->organizationShortName; ?> EMMIE® | Business Account Application</title>
 
     <style>
         body {

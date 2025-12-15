@@ -4,7 +4,7 @@
 
 ?>
 
-<title><?php echo $VariableDefinitionHandler->organizationShortName; ?> Unified Panel | Onboarding</title>
+<title><?php echo $VariableDefinitionHandler->organizationShortName; ?> EMMIE® | Onboarding</title>
 
 <style>
     .nexure-card:hover {

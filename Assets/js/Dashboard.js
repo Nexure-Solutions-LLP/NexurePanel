@@ -161,6 +161,40 @@ document.addEventListener("DOMContentLoaded", function() {
 
 });
 
+// ====================== Dashboard Modals Javascript Function ======================
+
+function toggleModal(modal, show) {
+    if (!modal) return;
+    modal.style.display = show ? "block" : "none";
+}
+
+var modalChangeBalance = document.getElementById("setbalanceModal");
+var modalPayBalance = document.getElementById("paybalanceModal");
+var modalCreditBalance = document.getElementById("creditLimitModal");
+
+function openBalanceModal() {
+    toggleModal(modalChangeBalance, true);
+}
+
+function closeBalanceModal() {
+    toggleModal(modalChangeBalance, false);
+}
+
+function openPaymentModal() {
+    toggleModal(modalPayBalance, true);
+}
+
+function closePaymentModal() {
+    toggleModal(modalPayBalance, false);
+}
+
+function openCreditModal() {
+    toggleModal(modalCreditBalance, true);
+}
+
+function closeCreditModal() {
+    toggleModal(modalCreditBalance, false);
+}
 
 // ====================== Dashboard Time of Day Text ======================
 

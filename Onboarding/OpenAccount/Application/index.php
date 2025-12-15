@@ -4,7 +4,7 @@
 
 ?>
 
-<title><?php echo $VariableDefinitionHandler->organizationShortName; ?> Unified Panel | Onboarding Account Selection</title>
+<title><?php echo $VariableDefinitionHandler->organizationShortName; ?> EMMIE® | Onboarding Account Selection</title>
 
 <section class="section nexure-open-online-access-and-account">
     <div class="container nexure-container">

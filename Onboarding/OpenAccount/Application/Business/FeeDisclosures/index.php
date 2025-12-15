@@ -6,7 +6,7 @@
 
 ?>
 
-    <title><?php echo $VariableDefinitionHandler->organizationShortName; ?> Unified Panel | Fee Disclosures</title>
+    <title><?php echo $VariableDefinitionHandler->organizationShortName; ?> EMMIE® | Fee Disclosures</title>
 
     <style>
         body {

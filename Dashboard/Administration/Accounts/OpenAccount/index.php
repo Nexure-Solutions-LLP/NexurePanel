@@ -10,7 +10,7 @@
 
 ?>
 
-    <title><?php echo $VariableDefinitionHandler->organizationShortName; ?> Unified Panel | <?php echo $PageTitle; ?></title>
+    <title>Emmie® by <?php echo $VariableDefinitionHandler->organizationShortName; ?> | <?php echo $PageTitle; ?></title>
 
 
     <section class="section dashboard">
@@ -26,7 +26,7 @@
                                     </div>
                                     <div>
                                         <p class="no-padding font-14px">Accounts</p>
-                                        <h4 class="text-bold font-20px no-padding" style="padding-bottom:0px; padding-top:5px;">Open a new account</h4>
+                                        <h4 class="text-bold font-20px no-padding" style="padding-bottom:0px; padding-top:5px;">Open Account</h4>
                                     </div>
                                 </div>
                                 <div style="margin-top:-5px;">
@@ -165,7 +165,7 @@
                                     <br>
                                     <div classs="form-control padding-top-10px">
                                         <label for="">Business Line 1</label>
-                                        <input class="nexure-textbox" name="password" type="text" placeholder="Little Internet Widgets" required="" />
+                                        <input class="nexure-textbox" name="addressline1" type="text" placeholder="123 Main Street" required="" />
                                     </div>
                                     <br>
                                     <div classs="form-control padding-top-10px">
@@ -199,7 +199,7 @@
                                     <br>
                                     <div classs="form-control padding-top-10px">
                                         <label for="">Business Line 2</label>
-                                        <input class="nexure-textbox" name="password" type="text" placeholder="" />
+                                        <input class="nexure-textbox" name="addressline2" type="text" placeholder="" />
                                     </div>
                                     <div class="form-control padding-top-20px">
                                         <label for="country">Country</label>

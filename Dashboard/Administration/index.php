@@ -7,7 +7,7 @@
 
 ?>
 
-    <title><?php echo $VariableDefinitionHandler->organizationShortName; ?> Unified Panel | <?php echo $PageTitle; ?></title>
+    <title>Emmie® by <?php echo $VariableDefinitionHandler->organizationShortName; ?> | <?php echo $PageTitle; ?></title>
 
 
     <section class="section dashboard margin-bottom-60px">
@@ -236,7 +236,7 @@
         <div class="container nexure-container catalog-container">
             <div class="width-100 display-flex align-center justify-content-space-between">
                 <p class="font-14px no-padding no-margin">Licensed To: <?php echo $VariableDefinitionHandler->organizationLegalName; ?></p>
-                <p class="font-14px no-padding no-margin">Version 25.0.5</p>
+                <p class="font-14px no-padding no-margin">Version 25.12.14</p>
             </div>
         </div>
     </section>

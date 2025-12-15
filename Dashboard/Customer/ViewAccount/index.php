@@ -19,7 +19,7 @@
 
 ?>
 
-<title><?php echo $VariableDefinitionHandler->organizationShortName; ?> Unified Panel | <?php echo $PageTitle; ?></title>
+<title>Emmie® by <?php echo $VariableDefinitionHandler->organizationShortName; ?> | <?php echo $PageTitle; ?></title>
 
 <section class="section dashboard">
     <div class="container nexure-container">
@@ -174,11 +174,11 @@
 
 <div id="accountModal" class="modal">
     <div class="modal-content">
-        <h6 style="font-size:16px; font-weight:800; padding:0; margin:0;">Full Account Number</h6>
-        <p style="font-size:14px; padding-top:30px; padding-bottom:30px;">Full Account Number: <?php echo $accountNumber; ?></p>
-        <p style="font-size:14px; padding-bottom:30px;">This account number will be used to identify your account. Keep this number safe.</p>
+        <h6 style="font-size:16px; font-weight:800; padding:0; margin:0;"><?php echo $LANG_ACCOUNT_NUMBER_VIEWER_TITLE; ?></h6>
+        <p style="font-size:14px; padding-top:30px; padding-bottom:30px;"><?php echo $LANG_ACCOUNT_NUMBER_VIEWER_TITLE; ?>: <?php echo $accountNumber; ?></p>
+        <p style="font-size:14px; padding-bottom:30px;"><?php echo $LANG_ACCOUNT_NUMBER_VIEWER_DISCLAIMER; ?></p>
         <div style="display:flex; align-items:right; justify-content:right;">
-            <button class="nexure-button primary" onclick="closeModal()">Close</button>
+            <button class="nexure-button primary" onclick="closeModal()"><?php echo $LANG_CLOSE_MODAL_BUTTON; ?></button>
         </div>
     </div>
 </div>
@@ -186,18 +186,18 @@
 <div id="paybalanceModal" class="modal">
     <div class="modal-content">
         <form method="POST" action="/Dashboard/Customer/ViewAccount/MakePayment/?account_number=<?php echo $accountNumber; ?>">
-            <h6 style="font-size:16px; font-weight:800; padding:0; margin:0;">Pay account balance?</h6>
+            <h6 style="font-size:16px; font-weight:800; padding:0; margin:0;"><?php $LANG_CUSTOMER_PAYMENT_MODAL_TITLE; ?></h6>
             <div style="font-size:14px; padding-top:30px; padding-bottom:30px;">
                 <div class="form-control">
                     <span class="margin-right-10px">$</span> <input class="nexure-textbox grey-400" id="balanceNumber" type="numeric" maxlenghth="10" name="balanceNumber" style="width:25%;" placeholder="65.00" />
                 </div>
             </div>
-            <p style="font-size:14px; padding-bottom:10px;">Please specify how much you would like to pay. Payments will post immediatly, you may need to refresh the page if the balance does not update.</p>
-            <p style="font-size:14px; padding-bottom:10px;">NOTE: You can make a payment larger than the balance if you want to prepay for services.</p>
-            <p style="font-size:14px; padding-bottom:30px;">Please do not include the currency, simply type the numeric value.</p>
+            <p style="font-size:14px; padding-bottom:10px;"><?php echo $LANG_CUSTOMER_PAYMENT_MODAL_DISCLAIMER_ONE; ?></p>
+            <p style="font-size:14px; padding-bottom:10px;"><?php echo $LANG_CUSTOMER_PAYMENT_MODAL_DISCLAIMER_TWO; ?></p>
+            <p style="font-size:14px; padding-bottom:30px;"><?php echo $LANG_CUSTOMER_PAYMENT_MODAL_DISCLAIMER_THREE; ?></p>
             <div style="display:flex; align-items:right; justify-content:right;">
-                <button class="nexure-button primary" type="submit" name="submit">Submit Payment</button>
-                <a class="nexure-button secondary" href="javascript:void(0)" onclick="closePaymentModal()">Close</a>
+                <button class="nexure-button primary" type="submit" name="submit"><?php echo $LANG_DECREASE_BALANCE_BUTTON; ?></button>
+                <a class="nexure-button secondary" href="javascript:void(0)" onclick="closePaymentModal()"><?php echo $LANG_CLOSE_MODAL_BUTTON; ?></a>
             </div>
         </form>
     </div>

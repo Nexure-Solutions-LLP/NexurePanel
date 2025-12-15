@@ -95,7 +95,7 @@
 
             echo '<li class="nav-links more">';
 
-            echo '<a class="nav-links-clickable more-button" href="#">More</a>';
+            echo '<a class="more-button" href="#">More</a>';
 
             echo '<ul class="dropdown">';
 
@@ -107,7 +107,7 @@
 
             echo '<li class="nav-links"><a href="/Modules/NexureSolutions/DomainManagement/CheckDomains" class="nav-links-clickable">Domain Search</a></li>';
             echo '<li class="nav-links"><a href="/Modules/NexureSolutions/FinancialServices/RunCredit" class="nav-links-clickable">Run Credit Check</a></li>';
-            echo '<li class="nav-links"><a href="/Dashboard/Administration/Settings" class="nav-links-clickable">System Settings</a></li>';
+            echo '<li class="nav-links"><a href="/Dashboard/Settings" class="nav-links-clickable">System Settings</a></li>';
             echo '<li class="nav-links"><a href="/Dashboard/Administration/Email" class="nav-links-clickable">Corporate Email</a></li>';
 
             echo '</ul></li>';
@@ -251,7 +251,7 @@
                 renderAdminNavLinks('Campaigns', $adminModules, $CurrentOnlineAccessAccountRole);
                 echo '</div>';
                 break;
-            case "Payroll":
+            case "Employee Management":
                 echo '<div class="display-flex align-center"><p class="no-margin no-padding" style="padding-right:20px; font-weight:500;">Employee Cloud</p>';
                 renderAdminNavLinks('Payroll', $adminModules, $CurrentOnlineAccessAccountRole);
                 echo '</div>';
@@ -262,7 +262,9 @@
                 echo '</div>';
                 break;
             default:
+                echo '<div class="display-flex align-center"><p class="no-margin no-padding" style="padding-right:20px; font-weight:500;">Dashboard</p>';
                 renderAdminNavLinks('Dashboard', $adminModules, $CurrentOnlineAccessAccountRole);
+                echo '</div>';
                 break;
         }
         

@@ -90,10 +90,10 @@
 
         ?>
 
-        <link rel="apple-touch-icon" sizes="180x180" href="https://nexuresolutions.com/assets/img/favicon/apple-touch-icon.png">
-        <link rel="icon" type="image/png" sizes="32x32" href="https://nexuresolutions.com/assets/img/favicon/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="https://nexuresolutions.com/assets/img/favicon/favicon-16x16.png">
-        <link rel="manifest" href="https://nexuresolutions.com/assets/img/favicon/site.webmanifest">
+        <link rel="apple-touch-icon" sizes="180x180" href="https://cdn.nexuresolutions.com/content/images/favicon/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="https://cdn.nexuresolutions.com/content/images/favicon/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="https://cdn.nexuresolutions.com/content/images/favicon/favicon-16x16.png">
+        <link rel="manifest" href="https://cdn.nexuresolutions.com/content/images/favicon/site.webmanifest">
         <script type="text/javascript">   
             window.antiFlicker = {
                 active: true,
@@ -144,7 +144,7 @@
                 <div class="display-flex align-center">
                     <div class="nexure-branding">
                         <a href="https://nexuresolutions.com/" class="text-neutral">
-                            <span><?php echo $VariableDefinitionHandler->organizationShortName; ?></span> | <span class="font-bold">EMMIE®</span>
+                            <span>Emmie®</span> by <span class="font-bold"><?php echo $VariableDefinitionHandler->organizationShortName; ?></span>
                         </a>
                     </div>
                     <div class="nexure-navbar-menu" id="nexure-navbar-js"></div>

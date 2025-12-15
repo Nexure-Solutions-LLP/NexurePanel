@@ -6,7 +6,7 @@
 
 ?>
 
-    <title><?php echo $VariableDefinitionHandler->organizationShortName; ?> Unified Panel | Personal Account Application</title>
+    <title><?php echo $VariableDefinitionHandler->organizationShortName; ?> EMMIE® | Personal Account Application</title>
 
     <style>
         body {
