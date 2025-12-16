@@ -1,42 +1,64 @@
-from langchain.agents import Tool
 import requests
+from langchain_core.tools import tool
 
 BASE_URL = "https://us-east-1.nexure-cloud-compute-130-12-30-4.nexuresolutions.com/Modules/Stripe/Payments/Backend/index.php"
 
-def call_php_backend(action: str, payload: dict):
-    try:
-        payload["action"] = action
-        response = requests.post(BASE_URL, json=payload)
-        response.raise_for_status()
-        return response.json()
-    except Exception as e:
-        return {"error": f"Error calling Stripe PHP backend: {e}"}
-
-def process_payment(customer_id: str, amount: float, payment_method_id: str, currency: str = "usd"):
-    return call_php_backend("processPayment", {
+@tool
+def process_payment(
+    customer_id: str,
+    amount: float,
+    payment_method_id: str,
+    currency: str = "usd"
+) -> str:
+    """Charge a customer via the Stripe PHP backend."""
+    response = requests.post(BASE_URL, data={
+        "action": "processPayment",
         "customer_id": customer_id,
         "amount": int(amount * 100),
         "payment_method_id": payment_method_id,
         "currency": currency
     })
+    return response.text
 
-def get_credit_balance(customer_id: str):
-    return call_php_backend("getCreditBalance", {"customer_id": customer_id})
+@tool
+def get_credit_balance(customer_id: str) -> str:
+    """Retrieve a customer's credit balance."""
+    response = requests.post(BASE_URL, data={
+        "action": "getCreditBalance",
+        "customer_id": customer_id
+    })
+    return response.text
 
-def create_subscription(customer_id: str, price_id: str):
-    return call_php_backend("createSubscription", {"customer_id": customer_id, "price_id": price_id})
+@tool
+def create_subscription(customer_id: str, price_id: str) -> str:
+    """Create a subscription for a customer."""
+    response = requests.post(BASE_URL, data={
+        "action": "createSubscription",
+        "customer_id": customer_id,
+        "price_id": price_id
+    })
+    return response.text
 
-def add_customer(name: str, email: str, phone: str, account_number: str):
-    return call_php_backend("addCustomer", {
+@tool
+def add_customer(
+    name: str,
+    email: str,
+    phone: str,
+    account_number: str
+) -> str:
+    """Add a new Stripe customer."""
+    response = requests.post(BASE_URL, data={
+        "action": "addCustomer",
         "name": name,
         "email": email,
         "phone": phone,
         "account_number": account_number
     })
+    return response.text
 
 TOOLS = [
-    Tool(name="process_payment", func=process_payment, description="Charge a customer via Stripe PHP backend"),
-    Tool(name="get_credit_balance", func=get_credit_balance, description="Get a customer's credit balance"),
-    Tool(name="create_subscription", func=create_subscription, description="Create a subscription"),
-    Tool(name="add_customer", func=add_customer, description="Add a new customer via Stripe PHP backend"),
+    process_payment,
+    get_credit_balance,
+    create_subscription,
+    add_customer
 ]

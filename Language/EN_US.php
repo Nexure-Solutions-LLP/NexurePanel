@@ -75,19 +75,19 @@
 
     // ====================== Modals Text Specifications ======================
 
-    $LANG_INCREASE_CREDITLIMIT_TITLE = "Increase customer's credit limit?";
+    $LANG_CHANGE_CREDITLIMIT_TITLE = "Change customer's credit limit?";
     $LANG_INCREASE_BALANCE_TITLE = "Increase customer's credit limit?";
     $LANG_DECREASE_BALANCE_TITLE = "Pay customer account balance?";
     $LANG_ACCOUNT_NUMBER_VIEWER_TITLE = "Full Account Number";
     $LANG_CUSTOMER_PAYMENT_MODAL_TITLE = "Pay account balance?";
     $LANG_INCREASE_BALNCE_CURRENCY_DISCLAIMER = "Please do not include the currency, simply type the numeric value. This will increase the balance on the account.";
-    $LANG_INCREASE_CRDLMNT_CURRENCY_DISCLAIMER = "Please do not include the currency, simply type the numeric value. This will increase the credit limit on the account.";
+    $LANG_CHANGE_CRDLMNT_CURRENCY_DISCLAIMER = "Please do not include the currency, simply type the numeric value. This will change the credit limit on the account.";
     $LANG_DECREASE_BALANCE_CURRENCY_DISCLAIMER = "Please do not include the currency, simply type the numeric value. This will deduct the balance on the account.";
     $LANG_ACCOUNT_NUMBER_VIEWER_DISCLAIMER = "This account number will be used to identify your account. Keep this number safe.";
     $LANG_CUSTOMER_PAYMENT_MODAL_DISCLAIMER_ONE = "Please specify how much you would like to pay. Payments will post immediatly, you may need to refresh the page if the balance does not update.";
     $LANG_CUSTOMER_PAYMENT_MODAL_DISCLAIMER_TWO = "NOTE: You can make a payment larger than the balance if you want to prepay for services.";
     $LANG_CUSTOMER_PAYMENT_MODAL_DISCLAIMER_THREE = "Please do not include the currency, simply type the numeric value.";
-    $LANG_INCREASE_CREDITLIMIT_BUTTON = "Submit Credit Line Increase";
+    $LANG_CHANGE_CREDITLIMIT_BUTTON = "Submit Credit Line Change";
     $LANG_INCREASE_BALANCECHANGE_BUTTON = "Submit Balance Change";
     $LANG_DECREASE_BALANCE_BUTTON = "Submit Payment";
 

@@ -41,9 +41,9 @@
                                 renderListingTable(
                                     $con,
                                     'tasks',
-                                    ['Title', 'Description', 'Actions'],
-                                    ['taskTitle', 'taskDescription', 'status'],
-                                    ['15%', '15%', '15%', '15%'],
+                                    ['Title', 'Description', 'Start Date', 'End Date', 'Status', 'Actions'],
+                                    ['taskTitle', 'taskDescription', 'taskStartDate', 'taskEndDate', 'status'],
+                                    ['15%', '35%', '10%', '10%', '10%', '10%'],
                                     [
                                         'View' => "/dashboard/administration/tasks/manageTask/?task_id={taskID}",
                                         'Edit' => "/dashboard/administration/tasks/editTask/?task_id={taskID}",

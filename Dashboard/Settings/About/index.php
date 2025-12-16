@@ -7,7 +7,7 @@
 
 ?>
 
-    <title>Emmie® by <?php echo $VariableDefinitionHandler->organizationShortName; ?></title>
+    <title>Emmie® by <?php echo $VariableDefinitionHandler->organizationShortName; ?> | <?php echo $PageTitle; ?></title>
 
     <style>body, html {overflow:hidden !important;}</style> <!-- Disable scrolling on the main page -->
 

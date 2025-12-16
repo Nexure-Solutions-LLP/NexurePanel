@@ -2,7 +2,7 @@
 
     ========================================================================================================
 
-    Nexure EMMIE Dashboard Stylesheet
+    Emmie by Nexure Dashboard Stylesheet
     Version 25.12.14
     Support Link: https://nexuresolutions.com/contact
     Website: https://nexuresolutions.com
@@ -567,6 +567,30 @@ body {
     color: #999;
 }
 
+.nexure-emmie-sidebar ul {
+    padding:0;
+    list-style:none;
+}
+
+.sidebar-item {
+    padding:10px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    background-color: #ddd;
+    border:1px solid #eee;
+    color: #000;
+    transition: all 0.3s ease-in-out;
+}
+
+.sidebar-item:hover {
+    background-color: #eee;
+    border:1px solid #eee;
+}
+
+.sidebar-item a {
+    color: #000;
+}
+
 /* ====================== Dark Mode Styles ===================== */
 
 body.dark-mode {
@@ -755,6 +779,21 @@ body.dark-mode {
 
 .dark-mode .filter-white-on-dark {
     filter: invert(1) !important;
+}
+
+.dark-mode .sidebar-item {
+    background-color: #131313;
+    border:1px solid #333;
+    color: #dbdbdb;
+}
+
+.dark-mode .sidebar-item:hover {
+    background-color: #333;
+    border:1px solid #333;
+}
+
+.sidebar-item a {
+    color: #dbdbdb;
 }
 
 /* ====================== Mobile Styles ===================== */

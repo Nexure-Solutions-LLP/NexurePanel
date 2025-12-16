@@ -1,8 +1,8 @@
 <?php
 
     // Nexure Solutions LLP (C) 2025 - All rights reserved.
-    // This is the Stripe payment handler for Nexure EMMIE System. This is can be used for other things but
-    // was adapted specifically for Nexure EMMIE System.
+    // This is the Stripe payment handler for Emmie by Nexure. This is can be used for other things but
+    // was adapted specifically for Emmie by Nexure.
     // Author: Nexure Developers
 
     require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';

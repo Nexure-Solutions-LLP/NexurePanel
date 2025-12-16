@@ -282,6 +282,11 @@
             public $accountServices = [];
             public $selectedAccountDetails;
 
+            public array $associatedFiles = [];
+            public array $associatedCases = [];
+            public array $associatedServices = [];
+            public array $duplicateAccounts = [];
+
             public $NexureRiskScore10;
 
             private function fetchSingleRow(\mysqli $con, string $query, array $params = []): ?array
@@ -817,26 +822,172 @@
 
                 $stmt->execute();
 
-                $result = $stmt->get_result();
-
-                $row = $result->fetch_assoc();
-
+                $row = $stmt->get_result()->fetch_assoc();
+                
                 $stmt->close();
 
                 $userEmail = $row['email'] ?? null;
 
                 if ($userEmail) {
- 
+
                     $this->GatherOnlineAccessInformation($con, $userEmail);
 
                     $this->loadRiskScore($con, $userEmail);
+
+                    $this->GatherUserAccounts($con, $userEmail);
 
                 }
 
                 $this->GatherSingleAccountDetails($con, $accountNumber);
 
-                $this->GatherUserAccounts($con, $userEmail);
+                $this->associatedFiles = [];
 
+                $fileStmt = $con->prepare("SELECT * FROM nexure_files WHERE accountNumber = ?");
+
+                $fileStmt->bind_param("s", $accountNumber);
+
+                $fileStmt->execute();
+
+                $fileResult = $fileStmt->get_result();
+
+                while ($file = $fileResult->fetch_assoc()) {
+
+                    $this->associatedFiles[] = $file;
+
+                }
+
+                $fileStmt->close();
+
+                $this->associatedCases = [];
+
+                $caseStmt = $con->prepare("SELECT * FROM nexure_cases WHERE accountNumber = ?");
+
+                $caseStmt->bind_param("s", $accountNumber);
+
+                $caseStmt->execute();
+
+                $caseResult = $caseStmt->get_result();
+
+                while ($case = $caseResult->fetch_assoc()) {
+
+                    $this->associatedCases[] = $case;
+
+                }
+
+                $caseStmt->close();
+
+                $this->associatedServices = [];
+
+                $serviceStmt = $con->prepare("SELECT * FROM nexure_services WHERE accountNumber = ?");
+
+                $serviceStmt->bind_param("s", $accountNumber);
+                
+                $serviceStmt->execute();
+
+                $serviceResult = $serviceStmt->get_result();
+
+                while ($service = $serviceResult->fetch_assoc()) {
+
+                    $this->associatedServices[] = $service;
+
+                }
+
+                $serviceStmt->close();
+
+                $accountInfo = $this->selectedAccountDetails ?? [];
+
+                $ownerName      = $accountInfo['headerName'] ?? '';
+
+                $businessName   = $accountInfo['headerName'] ?? '';
+                
+                $industry       = $accountInfo['accountType'] ?? '';
+
+                $email          = $userEmail ?? '';
+
+                $websiteDomain  = '';
+
+                if (!empty($accountNumber) || !empty($ownerName) || !empty($businessName) || !empty($industry) || !empty($email) || !empty($websiteDomain)) {
+
+                    $query = "
+                        SELECT 
+                            a.accountNumber,
+                            u.email,
+                            o.legalName,
+                            b.businessLegalName,
+                            b.businessDBAName,
+                            b.businessIndustry,
+                            w.domainName
+                        FROM nexure_accounts a
+                        LEFT JOIN nexure_users u ON a.email = u.email
+                        LEFT JOIN nexure_ownership o ON a.accountNumber = o.accountNumber
+                        LEFT JOIN nexure_businesses b ON a.accountNumber = b.accountNumber
+                        LEFT JOIN nexure_websites w ON u.email = w.email
+                        WHERE
+                            (? != '' AND a.accountNumber = ?)
+                            OR (? != '' AND o.legalName LIKE CONCAT('%', ?, '%'))
+                            OR (? != '' AND b.businessLegalName LIKE CONCAT('%', ?, '%'))
+                            OR (? != '' AND b.businessDBAName LIKE CONCAT('%', ?, '%'))
+                            OR (? != '' AND b.businessIndustry = ? AND (b.businessLegalName LIKE CONCAT('%', ?, '%') OR b.businessDBAName LIKE CONCAT('%', ?, '%')))
+                            OR (? != '' AND w.domainName LIKE CONCAT('%', ?, '%'))
+
+                        UNION
+
+                        SELECT 
+                            a2.accountNumber,
+                            u2.email,
+                            o2.legalName,
+                            b2.businessLegalName,
+                            b2.businessDBAName,
+                            b2.businessIndustry,
+                            w2.domainName
+                        FROM nexure_accounts a2
+                        LEFT JOIN nexure_users u2 ON a2.email = u2.email
+                        LEFT JOIN nexure_ownership o2 ON a2.accountNumber = o2.accountNumber
+                        LEFT JOIN nexure_businesses b2 ON a2.accountNumber = b2.accountNumber
+                        LEFT JOIN nexure_websites w2 ON u2.email = w2.email
+                        WHERE
+                            (? != '' AND o2.legalName LIKE CONCAT('%', ?, '%'))
+                            OR (? != '' AND b2.businessLegalName LIKE CONCAT('%', ?, '%'))
+                            OR (? != '' AND b2.businessDBAName LIKE CONCAT('%', ?, '%'))
+                            OR (? != '' AND w2.domainName LIKE CONCAT('%', ?, '%'))
+                    ";
+
+                    $stmt = $con->prepare($query);
+
+                    $stmt->bind_param(
+                        "ssssssssssssssssssssss",
+                        $accountNumber, $accountNumber,
+                        $ownerName, $ownerName,
+                        $businessName, $businessName,
+                        $businessName, $businessName,
+                        $industry, $industry, $businessName, $businessName,
+                        $websiteDomain, $websiteDomain,
+                        $ownerName, $ownerName,
+                        $businessName, $businessName,
+                        $businessName, $businessName,
+                        $websiteDomain, $websiteDomain
+                    );
+
+                    $stmt->execute();
+
+                    $result = $stmt->get_result();
+
+                    $this->duplicateAccounts = [];
+
+                    while ($row = $result->fetch_assoc()) {
+
+                        $this->duplicateAccounts[] = $row;
+
+                    }
+
+                    $stmt->close();
+
+                } else {
+
+                    $this->duplicateAccounts = [];
+
+                }
+                
             }
 
         }

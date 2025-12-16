@@ -6,3 +6,5 @@ __pycache__/
 *.pyc
 *.pyo
 Modules/NexureSolutions/System/Proxies/node_modules
+./Modules/NexureSolutions/System/Proxies/node_modules
+*/node_modules

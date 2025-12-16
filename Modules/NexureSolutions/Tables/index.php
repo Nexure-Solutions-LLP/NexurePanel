@@ -1,6 +1,6 @@
 <?php
 
-    // Nexure Panel Table Handler
+    // Emmi by Nexure Table Functions
     // Handles tables for accounts, blacklists, leads, campaigns, tasks, cases, users, etc.
     // Editing this file updates tables system-wide.
 
@@ -43,8 +43,11 @@
             }
 
             $timestamp = strtotime($dateValue);
+
             if (!$timestamp) return "—";
+
             $hasTime = (strpos($dateValue, ':') !== false);
+
             return $hasTime
                 ? date("l F j Y g:i A", $timestamp)
                 : date("l F j Y", $timestamp);
@@ -57,7 +60,9 @@
         function maskAccountNumber($number) {
 
             if (empty($number)) return "—";
+
             $last4 = substr($number, -4);
+
             return "•••••••• {$last4}";
 
         }
@@ -73,11 +78,13 @@
             foreach ($headers as $index => $header) {
 
                 $width = $columnWidths[$index] ?? 'auto';
+
                 $headerHtml .= "<th style='width:{$width};'>{$header}</th>";
 
             }
 
             $headerHtml .= '</tr>';
+
             return $headerHtml;
         }
 
@@ -111,6 +118,7 @@
             }
 
             $actionHtml .= '</td>';
+
             return $actionHtml;
 
         }
@@ -119,21 +127,42 @@
 
     if (!function_exists('renderListingRow')) {
 
-        function renderListingRow($row, $columns, $columnWidths, $actionUrls = []) {
+        function renderListingRow($row, $columns, $columnWidths, $actionUrls = [], $truncateTitle = false) {
 
             $rowHtml = '<tr>';
 
             foreach ($columns as $index => $column) {
 
                 $width = $columnWidths[$index] ?? 'auto';
+
                 $value = $row[$column] ?? '';
 
                 switch (strtolower($column)) {
+
                     case 'accountnumber':
                         $value = maskAccountNumber($value);
                         break;
-                    case 'accountstatus':
+                    case 'orderdate':
+                    case 'renderdate':
+                    case 'created_at':
+                        $value = $value ?: '—';
+                        if ($truncateTitle && strlen($value) > 10) {
+                            $value = substr($value, 0, 10) . '...';
+                        }
+                    case 'casecreatedate':
+                    case 'caseclosedate':
+                    case 'firstinteractiondate':
+                    case 'lastinteractiondate':
+                    case 'duedate':
+                    case 'lastactivity':
+                    case 'taskStartDate':
+                        $value = formatDateTime($value);
+                        break;
+                    case 'taskEndDate':
+                        $value = formatDateTime($value);
+                        break;
                     case 'status':
+                    case 'accountstatus':
                     case 'onlineaccessstatus':
                     case 'leadstatus':
                     case 'taskstatus':
@@ -148,6 +177,12 @@
                     case 'customername':
                     case 'casetitle':
                         $value = $value ?: 'Unknown';
+                        break;
+                    case 'title':
+                        $value = $value ?: '—';
+                        if ($truncateTitle && strlen($value) > 15) {
+                            $value = substr($value, 0, 15) . '...';
+                        }
                         break;
                     case 'email':
                     case 'leademail':
@@ -167,20 +202,10 @@
                     case 'companyname':
                         $value = $value ?: '—';
                         break;
-                    case 'date':
-                    case 'firstinteractiondate':
-                    case 'lastinteractiondate':
-                    case 'duedute':
-                    case 'lastactivity':
-                    case 'taskstartdate':
-                    case 'taskduedate':
-                    case 'casecreatedate':
-                    case 'caseclosedate':
-                        $value = formatDateTime($value);
-                        break;
                     default:
                         $value = $value ?: '—';
                         break;
+
                 }
 
                 $rowHtml .= "<td style='width:{$width};word-wrap:break-word;'>{$value}</td>";
@@ -194,80 +219,97 @@
             }
 
             $rowHtml .= '</tr>';
+
             return $rowHtml;
 
         }
 
     }
 
+    
     if (!function_exists('renderListingTable')) {
 
-        function renderListingTable($con, $tableType, $headers, $columns, $columnWidths, $actionUrls = []) {
+        function renderListingTable($con, $tableType, $headers, $columns, $columnWidths, $actionUrls = [], $account = null, $truncateTitle = false) {
 
-            try {
+            echo '<table class="nexure-table-plugin nexure-table-domains">';
 
-                switch (strtolower($tableType)) {
-                    case 'accounts':
-                        $sql = "SELECT a.*, u.displayName, u.accessLevel, u.onlineAccessStatus FROM nexure_accounts a LEFT JOIN nexure_users u ON a.email = u.email ORDER BY a.id DESC";
-                        break;
-                    case 'blacklists':
-                        $sql = "SELECT * FROM nexure_blacklist ORDER BY id DESC";
-                        break;
-                    case 'leads':
-                        $sql = "SELECT * FROM nexure_leads ORDER BY lastActivity DESC";
-                        break;
-                    case 'campaigns':
-                        $sql = "SELECT * FROM nexure_campaigns ORDER BY lastActivity DESC";
-                        break;
-                    case 'users':
-                        $sql = "SELECT * FROM nexure_users ORDER BY firstInteractionDate DESC";
-                        break;
-                    case 'tasks':
-                        $sql = "SELECT * FROM nexure_tasks ORDER BY dueDate DESC";
-                        break;
-                    case 'cases':
-                        $sql = "SELECT * FROM nexure_cases ORDER BY caseCreateDate DESC";
-                        break;
-                    default:
-                        echo "<p>Unknown table type: {$tableType}</p>";
-                        return;
-                }
+            echo renderTableHeaders($headers, $columnWidths);
 
-                $result = mysqli_query($con, $sql);
+            $rows = [];
 
-                echo '<table class="nexure-table-plugin nexure-table-domains">';
-                echo renderTableHeaders($headers, $columnWidths);
+            switch (strtolower($tableType)) {
 
-                if ($result && mysqli_num_rows($result) > 0) {
-
-                    while ($row = mysqli_fetch_assoc($result)) {
-
-                        echo renderListingRow($row, $columns, $columnWidths, $actionUrls);
-
+                case 'accounts':
+                    $sql = "SELECT a.*, u.displayName, u.accessLevel, u.onlineAccessStatus 
+                            FROM nexure_accounts a 
+                            LEFT JOIN nexure_users u ON a.email = u.email 
+                            ORDER BY a.id DESC";
+                    $result = mysqli_query($con, $sql);
+                    if ($result) while ($row = mysqli_fetch_assoc($result)) $rows[] = $row;
+                    break;
+                case 'account_services':
+                    if (!empty($account['associatedServices'])) {
+                        $rows = $account['associatedServices'];
                     }
+                    break;
+                case 'account_cases':
+                    if (!empty($account['associatedCases'])) {
+                        $rows = $account['associatedCases'];
+                    }
+                    break;
+                case 'account_files':
+                    if (!empty($account['associatedFiles'])) {
+                        $rows = $account['associatedFiles'];
+                    }
+                    break;
+                case 'account_users':
+                    if (!empty($account['userAccounts'])) {
+                        $rows = $account['userAccounts'];
+                    }
+                    break;
+                case 'tasks':
+                    $sql = "SELECT * FROM nexure_tasks ORDER BY taskStartDate DESC";
+                    $result = mysqli_query($con, $sql);
+                    if ($result) while ($row = mysqli_fetch_assoc($result)) $rows[] = $row;
+                    break;
+                case 'cases':
+                    $sql = "SELECT * FROM nexure_cases ORDER BY created_at DESC";
+                    $result = mysqli_query($con, $sql);
+                    if ($result) while ($row = mysqli_fetch_assoc($result)) $rows[] = $row;
+                    break;
+                case 'leads':
+                    $sql = "SELECT * FROM nexure_leads ORDER BY leadName ASC";
+                    $result = mysqli_query($con, $sql);
+                    if ($result) while ($row = mysqli_fetch_assoc($result)) $rows[] = $row;
+                    break;
+                case 'users':
+                    $sql = "SELECT * FROM nexure_users ORDER BY displayName ASC";
+                    $result = mysqli_query($con, $sql);
+                    if ($result) while ($row = mysqli_fetch_assoc($result)) $rows[] = $row;
+                    break;
+                default:
+                    echo "<tr><td colspan='" . count($headers) . "'>Unknown table type: {$tableType}</td></tr>";
+                    echo '</table>';
+                    return;
+            }
 
-                } else {
+            if (!empty($rows)) {
 
-                    $colspan = count($headers) + ($actionUrls ? 1 : 0);
-                    echo "<tr><td colspan='{$colspan}' style='text-align:center;'>There are no records</td></tr>";
+                foreach ($rows as $row) {
+
+                    echo renderListingRow($row, $columns, $columnWidths, $actionUrls, $truncateTitle);
 
                 }
 
-                echo '</table>';
-                mysqli_free_result($result);
+            } else {
 
-            } catch (\Throwable $exception) {
-
-                if (class_exists('\Sentry')) {
-
-                    \Sentry\captureException($exception);
-
-                }
+                echo "<tr><td colspan='" . count($headers) . "' style=''>There are no records</td></tr>";
 
             }
 
-        }
+            echo '</table>';
 
+        }
     }
 
 ?>

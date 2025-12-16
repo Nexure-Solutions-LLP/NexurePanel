@@ -79,7 +79,7 @@
 
                 <div class="" style="margin-left:auto; margin-right:auto; text-align:center; padding-bottom:4%;">
                     <img src="/Assets/img/SystemImages/VectorImages/salesPersonActivityNoContent.svg" style="width:40%; margin-top:2%; height:20vh;" alt="Bar Graph Not Found Graphic Vector" >
-                    <p style="margin-top:4%; font-size:14px;">When you add Sales People their performance will show.</p>
+                    <p style="margin-top:4%; font-size:14px;">When you add sales people their performance will show.</p>
                 </div>
 
             ';

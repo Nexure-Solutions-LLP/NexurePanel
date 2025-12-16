@@ -30,7 +30,7 @@
                     $details = [
                         'Type' => ($accountDetails['accessLevel'] === 'Customer') ? 'Customer - Direct' : (($accountDetails['accessLevel'] === 'Partner') ? 'Partner - Affiliate' : '——'),
                         'Owner' => $CurrentAccountExamination->displayName,
-                        'Credit Limit' => number_format((float)$account['creditLimit'], 2).'<a href="javascript:void(0);" onclick="openCreditModal()" class="brand-link"> (Increase Limit)</a>',
+                        'Credit Limit' => number_format((float)$account['creditLimit'], 2).'<a href="javascript:void(0);" onclick="openCreditModal()" class="brand-link"> (Change Limit)</a>',
                         'First Interaction' => $CurrentAccountExamination->firstinteractiondateformattedfinal,
                         'Last Interaction' => $CurrentAccountExamination->lastinteractiondateformattedfinal
                     ];
