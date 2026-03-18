@@ -40,9 +40,9 @@
                                 renderListingTable(
                                     $con,
                                     'users',
-                                    ['Name', 'Email', 'Status', 'Date', 'Actions'],
-                                    ['displayName', 'email', 'onlineAccessStatus', 'firstInteractionDate'],
-                                    ['40%', '20%', '10%'],
+                                    ['Name', 'Email', 'Type', 'Risk Monitoring', 'Status', 'Date', 'Actions'],
+                                    ['displayName', 'email',  'accessLevel', 'riskScoreMonitoring', 'onlineAccessStatus', 'firstInteractionDate'],
+                                    ['20%', '20%', '15%', '10%', '10%', '10%'],
                                     [
                                         'View' => "/Dashboard/Administration/Profiles/ManageProfile/?email={email}",
                                         'Edit' => "/Dashboard/Administration/Profiles/EditProfile/?email={email}",
