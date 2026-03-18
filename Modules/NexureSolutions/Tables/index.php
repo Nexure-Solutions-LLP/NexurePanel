@@ -36,7 +36,7 @@
 
         function formatDateTime($dateValue) {
 
-            if (empty($dateValue) || $dateValue === "0000-00-00" || $dateValue === "0000-00-00 00:00:00") {
+            if (empty($dateValue) || $dateValue == "0000-00-00" || $dateValue == "0000-00-00 00:00:00") {
 
                 return "—";
 
@@ -49,8 +49,8 @@
             $hasTime = (strpos($dateValue, ':') !== false);
 
             return $hasTime
-                ? date("l F j Y g:i A", $timestamp)
-                : date("l F j Y", $timestamp);
+                ? date("F j Y g:i A", $timestamp)
+                : date("F j Y g:i A", $timestamp);
         }
 
     }
@@ -155,6 +155,7 @@
                     case 'lastinteractiondate':
                     case 'duedate':
                     case 'lastactivity':
+                    case 'taskID':
                     case 'taskStartDate':
                         $value = formatDateTime($value);
                         break;
@@ -202,6 +203,8 @@
                     case 'companyname':
                         $value = $value ?: '—';
                         break;
+                    case 'type':
+                        $value = ucfirst($value);
                     default:
                         $value = $value ?: '—';
                         break;

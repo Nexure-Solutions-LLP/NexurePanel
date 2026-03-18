@@ -12,7 +12,7 @@
             <div>
                 <img src="<?php echo $VariableDefinitionHandler->organizationWideLogo; ?>" loading="lazy" alt="Nexure Solutions Logo" class="nexure-logo light-mode" style="margin-top:12%; width:12%;">
                 <img src="<?php echo $VariableDefinitionHandler->organizationWideLogoDark; ?>" loading="lazy" alt="Nexure Solutions Logo" class="nexure-logo dark-mode" style="margin-top:12%; width:12%;">
-                <h6 class="secondary-font font-bold" style="font-weight:300; font-size:25px; margin:0; padding:0; margin-top:4%; margin-bottom:3%;"><?php echo $LANG_FORBIDDEN_TITLE; ?></h6>
+                <h6 class="font-bold" style="font-size:25px; margin:0; padding:0; margin-top:4%; margin-bottom:3%;"><?php echo $LANG_FORBIDDEN_TITLE; ?></h6>
                 <p class="nexure-login-sublink license-text-dark width-80" style="margin-bottom:3%;"><?php echo $LANG_FORBIDDEN_SUBTEXT; ?></p>
                 <p class="nexure-login-sublink license-text-dark width-80" style="margin-bottom:3%;">Reference ID: <?php echo $NexureUUID ?></p>
             </div>

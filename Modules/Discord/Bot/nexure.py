@@ -14,21 +14,23 @@ from discord.ext import commands
 from utils.constants import NexureConstants
 from utils.utils import get_prefix, NexureContext
 from cogwatch import watch
+from dotenv import load_dotenv
 
 # We use constants.py to specify things like the mysql db connection, prefix
-# and default embed color.
+# and default embed color. This also will load basic settings from the ENV file.
 
 constants = NexureConstants()
+load_dotenv()
 
 class Nexure(commands.AutoShardedBot):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.token = None
         self.start_time = datetime.now()
-        self.error = "<:NexureFail:1377202015507054663>"
-        self.success = "<:NexureSuccess:1370202310113886339>"
-        self.loading = "<a:NexureLoading:1377202096545202187>"
-        self.warning = "<:NexureWarning:1377202194717347865>"
+        self.error = os.getenv("NEXURE_SUCCESS_EMOJI")
+        self.success = os.getenv("NEXURE_FAIL_EMOJI")
+        self.loading = os.getenv("NEXURE_LOADING_EMOJI")
+        self.warning = os.getenv("NEXURE_WARNING_EMOJI")
         self.base_color = 0x8dc6f4
         self.context = NexureContext
         self.prefixes = {}
@@ -48,10 +50,8 @@ class Nexure(commands.AutoShardedBot):
                 for row in rows:
                     self.prefixes[int(row["guild_id"])] = row["prefix"]
 
-
         if constants.nexure_environment_type() == "Development":
             pass
-
 
         else:
             await self.change_presence(
@@ -61,9 +61,7 @@ class Nexure(commands.AutoShardedBot):
                 )
             )
 
-
         print(f"{self.user.name} is ready!")
-
 
 
     async def is_owner(self, user: discord.User):
@@ -89,7 +87,6 @@ class Nexure(commands.AutoShardedBot):
         return False
 
 
-
     async def setup_hook(self) -> None:
         await constants.connect()
 
@@ -101,7 +98,6 @@ class Nexure(commands.AutoShardedBot):
                     await self.load_extension(f"cogs.{cog_module}")
 
         print("All cogs loaded successfully!")
-
 
 
     async def refresh_blacklist_periodically(self):
@@ -132,7 +128,6 @@ async def before_invoke(ctx):
     if ctx.author.id in constants.bypassed_users:
         return
     await global_blacklist_check(ctx)
-
 
 
 async def global_blacklist_check(ctx):
@@ -168,7 +163,6 @@ async def global_blacklist_check(ctx):
         raise commands.NoPrivateMessage("This command cannot be used in private messages.")
 
     return True
-
 
 
 def run():

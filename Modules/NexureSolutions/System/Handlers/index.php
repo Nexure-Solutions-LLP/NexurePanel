@@ -1103,7 +1103,10 @@
 
         // Error Logging and Redirection
 
-        
+
+        // Account Number Prefix
+
+        $ACCOUNT_NUMBER_PREFIX = $_ENV['ACCOUNTSTARTNUMBER'];
 
         // IP Address Checking and Banning
 

@@ -20,11 +20,17 @@
 
 */
 
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap');
+
 /* ====================== Global Styles ===================== */
 
 body {
     margin:0;
     padding:0;
+    background-image: url("/Assets/img/SystemImages/Backgrounds/DashboardLines.webp");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
 }
 
 *::-webkit-scrollbar {
@@ -87,6 +93,14 @@ body {
     margin-top: 0;
 }
 
+.account-status-badge.not-rounded {
+    border-radius: 6px;
+    padding: 4px 12px;
+    font-size: 12px;
+    margin-top: 0;
+    margin-left: 10px;
+}
+
 .account-status-badge.passive {
     border: 1px solid #B8B8B8;
     background-color: #F1F1F1;
@@ -133,6 +147,20 @@ body {
 
 .padding-10px {
     padding:10px !important;
+}
+
+.background-grey-100 p {
+    font-family: "IBM Plex Sans", sans-serif;
+    font-size: 12px !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: "Mona Sans", sans-serif !important;
 }
 
 /* ====================== Container Styles ===================== */
@@ -359,7 +387,6 @@ body {
     padding-right: 10px !important;
     padding-top: 10px !important;
     padding-bottom: 10px !important;
-    font-size:12px !important;
 }
 
 .nexure-table-plugin td {
@@ -372,6 +399,10 @@ body {
     border-bottom: 1px solid #ddd;
     background-color: #e7e7e7;
     font-weight: 600 !important;
+}
+
+.nexure-table-plugin tbody tr {
+    font-size: 12px !important;
 }
 
 /* =================== Nexure Dashboard Modals =================== */
@@ -595,6 +626,7 @@ body {
 
 body.dark-mode {
     background-color:rgb(0, 0, 0) !important;
+    background-image: url("/Assets/img/SystemImages/Backgrounds/DashboardLinesDark.webp");
 }
 
 .dark-mode *::-webkit-scrollbar {
@@ -630,14 +662,14 @@ body.dark-mode {
 }
 
 .dark-mode .nexure-table-plugin th {
-    background-color: #333;
-    border-bottom: 1px solid #444;
-    border-top:1px solid #444;
+    background-color: #333 !important;
+    border-bottom: 1px solid #444 !important;
+    border-top:1px solid #444 !important;
 }
 
 .dark-mode .nexure-table-plugin tbody tr,
 .dark-mode .nexure-table-plugin tbody tr td {
-    background-color: #161616;
+    background-color: #161616 !important;
 }
 
 .dark-mode .nexure-table-plugin {
@@ -796,6 +828,14 @@ body.dark-mode {
     color: #dbdbdb;
 }
 
+.dark-mode .brand-link {
+    color: #60b3f7 !important;
+}
+
+.dark-mode .brand-link:hover {
+    color: #1584e0 !important;
+}
+
 /* ====================== Mobile Styles ===================== */
 
 @media (max-width:1000px) {
@@ -835,7 +875,6 @@ body.dark-mode {
     .nexure-table-plugin tr  {
         margin-bottom: 30px !important;
         padding: 0px !important;
-        font-size: 14px !important;
         display: block !important;
         width: 100% !important;
         max-width: 100% !important;
@@ -843,7 +882,6 @@ body.dark-mode {
     }
 
     .nexure-table-plugin tbody tr {
-        background-color: #fff !important;
         padding-left: 20px !important;
         padding-top:20px !important;
         padding-bottom: 20px !important;
@@ -866,5 +904,16 @@ body.dark-mode {
 
     .search-container {
         display: none !important;
+    }
+}
+
+@media (max-width:999px) {
+    .nexure-three-grid {
+        grid-template-columns: 1fr !important;
+        row-gap: 20px !important;
+    }
+
+    .title-cards {
+        margin-bottom: 4%;
     }
 }

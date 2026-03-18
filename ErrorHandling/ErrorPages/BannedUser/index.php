@@ -15,7 +15,7 @@
                     <img src="/Assets/img/SystemImages/Icons/banned.webp" style="height:30px; width:30px;" />
                 </div>
                 <div>
-                    <h6 class="secondary-font font-bold" style="font-weight:300; font-size:25px; margin:0; padding:0; margin-top:4%; margin-bottom:3%;"><?php echo $LANG_BANNED_TITLE; ?></h6>
+                    <h6 class="font-bold" style="font-size:25px; margin:0; padding:0; margin-top:4%; margin-bottom:3%;"><?php echo $LANG_BANNED_TITLE; ?></h6>
                     <p class="nexure-login-sublink license-text-dark width-80" style="margin-bottom:3%;"><?php echo $LANG_BANNED_TEXT; ?></p>
                     <p class="nexure-login-sublink license-text-dark width-80" style="margin-bottom:3%;">Reference ID: <?php echo $NexureUUID ?></p>
                 </div>

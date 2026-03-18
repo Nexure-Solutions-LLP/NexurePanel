@@ -80,8 +80,7 @@ class PingPaginationView(discord.ui.View):
             if self.page == self.max_page:
                 self.next_button.disabled = True
             await self.update_message(interaction)
-
-
+            
 
 class ReminderPaginationView(discord.ui.View):
     def __init__(self, nexure: commands.Bot, reminders: List[dict], per_page: int = 5):
@@ -109,6 +108,7 @@ class ReminderPaginationView(discord.ui.View):
             current_page_reminders, self.page + 1, self.max_page
         ).create_embed()
         self.update_buttons()
+        
         await interaction.response.edit_message(embed=embed, view=self)
 
 
@@ -145,9 +145,7 @@ class ReminderPaginationView(discord.ui.View):
             await self.update_message(interaction)
 
 
-
 class GuildPaginator(discord.ui.View):
-    
     
     def __init__(self, ctx, guilds, per_page=10):
         super().__init__()
@@ -178,6 +176,7 @@ class GuildPaginator(discord.ui.View):
         )
         
         embed.set_footer(text=f"Page {self.page + 1}/{self.max_pages}")
+        
         return embed
 
 
@@ -214,7 +213,6 @@ class GuildPaginator(discord.ui.View):
             button.disabled = True
         await self.update_message()
         await interaction.response.defer()
-
 
     async def send(self):
         self.message = await self.ctx.send(embed=self.get_embed(), view=self)

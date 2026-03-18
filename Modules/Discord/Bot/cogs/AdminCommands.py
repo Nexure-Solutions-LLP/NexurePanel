@@ -13,10 +13,8 @@ constants = NexureConstants()
 
 async def is_panel_admin(discord_id: int) -> bool:
     
-    
     if not constants.pool:
         await constants.connect()
-        
         
     async with constants.pool.acquire() as conn:
         async with conn.cursor(aiomysql.DictCursor) as cur:
@@ -50,10 +48,8 @@ class AdminCommandsCog(commands.Cog):
         if not constants.pool:
             await constants.connect()
 
-
         user = await interaction.client.fetch_user(int(entity_id))
         display_name = f"{user.mention}"
-
 
         async with constants.pool.acquire() as conn:
             
@@ -72,7 +68,6 @@ class AdminCommandsCog(commands.Cog):
                     )
                     return await interaction.response.send_message(embed=embed)
 
-
         modal = BlacklistModal(self.nexure, int(entity_id), display_name, blacklist_type)
         await interaction.response.send_modal(modal)
         
@@ -80,18 +75,14 @@ class AdminCommandsCog(commands.Cog):
     @app_commands.command(name="unblacklist")
     async def unblacklist(self, interaction: Interaction, entity_id: str):
         
-        
         await interaction.response.defer(ephemeral=False)
-
 
         if not constants.pool:
             await constants.connect()
 
-
         try:
             entity_user = await self.nexure.fetch_user(int(entity_id))
             entity_type, entity_id_int, display = "user", entity_user.id, entity_user.mention
-            
             
         except Exception:
             entity_type, entity_id_int, display = "guild", entity_id, f"Guild `{entity_id}`"
@@ -105,9 +96,7 @@ class AdminCommandsCog(commands.Cog):
                     (entity_id_int)
                 )
                 
-                
                 row = await cur.fetchone()
-
 
                 if not row:
                     embed = discord.Embed(
@@ -115,7 +104,6 @@ class AdminCommandsCog(commands.Cog):
                         color=self.nexure.base_color,
                     )
                     return await interaction.followup.send(embed=embed)
-
 
                 if entity_type == "user":
                     await cur.execute("SELECT email FROM nexure_users WHERE oAuthID=%s", (entity_id_int,))
@@ -161,15 +149,12 @@ class AdminCommandsCog(commands.Cog):
                 )
             await conn.commit()
 
-
         embed = discord.Embed(
             description=f"{self.nexure.success} **{display}** has been **unblacklisted**.",
             color=self.nexure.base_color,
         )
         
-        
         await interaction.followup.send(embed=embed)
-    
     
     @commands.command()
     async def sync(self, ctx: NexureContext, guild_id: int = None):

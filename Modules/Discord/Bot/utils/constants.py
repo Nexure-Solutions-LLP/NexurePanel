@@ -39,10 +39,8 @@ class NexureConstants:
 
     async def fetch_bypassed_users(self):
         
-        
         if not self.pool:
             await self.connect()
-            
             
         try:
             async with self.pool.acquire() as conn:
@@ -50,8 +48,7 @@ class NexureConstants:
                     await cur.execute("SELECT discord_id FROM blacklist_bypass")
                     rows = await cur.fetchall()
                     self.bypassed_users = [row["discord_id"] for row in rows]
-                    
-                    
+                          
         except Exception as e:
             print(f"[DB] Error fetching bypassed users: {e}")
 
@@ -138,26 +135,20 @@ class NexureConstants:
     def nexure_token_setup(self):
         return str(os.getenv("TOKEN"))
 
-
     def nexure_client_id_setup(self):
         return str(os.getenv("CLIENT_ID"))
-
 
     def nexure_client_secret_setup(self):
         return str(os.getenv("CLIENT_SECRET"))
 
-
     def nexure_redirect_uri_setup(self):
         return str(os.getenv("REDIRECT_URL"))
-
 
     def sentry_dsn_setup(self):
         return os.getenv("SENTRY_DSN")
 
-
     def nexure_embed_color_setup(self):
-        return discord.Color.from_str(os.getenv("COLOUR", "#8dc6f4"))
-
+        return discord.Color.from_str(os.getenv("FALLBACK_UI_COLOR", "#8dc6f4"))
 
     def nexure_environment_type(self):
         return os.getenv("ENVIRONMENT", "Development")
@@ -174,10 +165,8 @@ class NexureConstants:
 
     async def fetch_blacklisted_users(self):
         
-        
         if not self.pool:
             await self.connect()
-            
             
         try:
             async with self.pool.acquire() as conn:
@@ -196,30 +185,25 @@ class NexureConstants:
                     self.blacklists = rows
                     self.blacklisted_user_ids = {int(r["discord_id"]) for r in rows}
                     
-                    
         except Exception as e:
             print(f"[DB] Error fetching blacklisted users: {e}")
 
 
     async def fetch_blacklisted_guilds(self):
         
-        
         if not self.pool:
             await self.connect()
-            
             
         try:
             async with self.pool.acquire() as conn:
                 async with conn.cursor(aiomysql.DictCursor) as cur:
-                    await cur.execute("SELECT discord_id FROM server_blacklists")
+                    await cur.execute("SELECT server_id FROM nexure_blacklists")
                     rows = await cur.fetchall()
-                    self.server_blacklists = [int(r["discord_id"]) for r in rows]
+                    self.server_blacklists = [int(r["server_id"]) for r in rows]
                     self.blacklisted_guild_ids = set(self.server_blacklists)
-                    
                     
         except Exception as e:
             print(f"[DB] Error fetching blacklisted guilds: {e}")
-
 
     async def refresh_blacklists(self):
         await self.fetch_blacklisted_users()

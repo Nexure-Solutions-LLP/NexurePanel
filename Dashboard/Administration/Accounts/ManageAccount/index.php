@@ -47,7 +47,22 @@
                         </div>
                         <div class="card-body">
                             <div class="dashboard-table">
-                                
+                                <?php
+
+                                    renderListingTable(
+                                        $con,
+                                        'account_users',
+                                        ['Name', 'Email', 'Access Level', 'Status', 'Actions'],
+                                        ['displayName', 'email', 'accessLevel', 'onlineAccessStatus'],
+                                        ['25%', '30%', '20%', '15%'],
+                                        [
+                                            'View' => "/Dashboard/Administration/Accounts/ManageAccount/?account_number={accountNumber}",
+                                            'Edit' => "/Dashboard/Administration/Accounts/EditAccount/?account_number={accountNumber}"
+                                        ],
+                                        $account
+                                    );
+
+                                ?>
                             </div>
                         </div>
                     </div>

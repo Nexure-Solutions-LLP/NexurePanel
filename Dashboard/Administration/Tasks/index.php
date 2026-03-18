@@ -45,8 +45,8 @@
                                     ['taskTitle', 'taskDescription', 'taskStartDate', 'taskEndDate', 'status'],
                                     ['15%', '35%', '10%', '10%', '10%', '10%'],
                                     [
-                                        'View' => "/dashboard/administration/tasks/manageTask/?task_id={taskID}",
-                                        'Edit' => "/dashboard/administration/tasks/editTask/?task_id={taskID}",
+                                        'View' => "/Dashboard/Administration/Tasks/ManageTask/?task_id={taskID}",
+                                        'Edit' => "/Dashboard/Administration/Tasks/EditTask/?task_id={taskID}",
                                         'Delete' => "openModal('deleteTask({taskID})')"
                                     ]
                                 );

@@ -33,7 +33,6 @@ class CommandsCog(commands.Cog):
         
         await ctx.defer(ephemeral=True)
 
-
         uptime_formatted = f"<t:{int((self.nexure.start_time.timestamp()))}:R>"
         guilds = len(self.nexure.guilds)
         users = sum(g.member_count for g in self.nexure.guilds)
@@ -43,7 +42,6 @@ class CommandsCog(commands.Cog):
         version = await constants.get_mysql_version()
         command_run_time = datetime.now()
         formatted_time = command_run_time.strftime("Today at %I:%M %p UTC")
-
 
         embed = AboutEmbed.create_info_embed(
             uptime=self.nexure.start_time,
@@ -81,12 +79,10 @@ class CommandsCog(commands.Cog):
     @commands.hybrid_command(name="ping", description="Check the bot's latency, uptime, and shard info.", with_app_command=True, extras={"category": "Other"},)
     async def ping(self, ctx: NexureContext):
         
-        
         latency = self.nexure.latency
         database_latency = await self.get_db_latency()
         uptime = self.nexure.start_time
         shard_info = []
-        
         
         for shard_id, shard in self.nexure.shards.items():
             shard_info.append(
@@ -97,11 +93,9 @@ class CommandsCog(commands.Cog):
                 }
             )
 
-
         embed = PingCommandEmbed.create_ping_embed(
             latency, database_latency, uptime, shard_info, page=0
         )
-        
         
         view = PingPaginationView(self.nexure, latency, database_latency, uptime, shard_info)
         await ctx.send(embed=embed, view=view)
@@ -114,7 +108,6 @@ class CommandsCog(commands.Cog):
         if ctx.interaction:
             await ctx.send("sent", allowed_mentions=discord.AllowedMentions.none(), ephemeral=True)
             await ctx.channel.send(message, allowed_mentions=discord.AllowedMentions.none())
-            
             
         else:
             await ctx.channel.send(message, allowed_mentions=discord.AllowedMentions.none())

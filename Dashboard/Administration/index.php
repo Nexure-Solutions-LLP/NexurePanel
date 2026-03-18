@@ -13,7 +13,7 @@
     <section class="section dashboard margin-bottom-60px">
         <div class="container nexure-container">
 
-            <div class="nexure-grid nexure-three-grid gap-row-spacing-30">
+            <div class="nexure-grid nexure-three-grid gap-row-spacing-30 title-cards">
                 <div class="nexure-card">
                     <h4 class="font-18px text-bold no-padding">Engage with your Customers</h4>
                 </div>

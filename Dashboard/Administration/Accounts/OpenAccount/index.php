@@ -8,6 +8,171 @@
     include($_SERVER["DOCUMENT_ROOT"]."/Modules/NexureSolutions/Dashboard/Headers/index.php");
     include($_SERVER["DOCUMENT_ROOT"].'/Modules/NexureSolutions/Tables/index.php');
 
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
+
+        mysqli_begin_transaction($con);
+
+        mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+
+        try {
+
+            function clean($val) {
+                return trim(htmlspecialchars($val, ENT_QUOTES, 'UTF-8'));
+            }
+
+            $name          = clean($_POST['name']);
+            $email         = clean($_POST['email']);
+            $password      = $_POST['password'];
+            $role          = clean($_POST['role']);
+            $status        = clean($_POST['status']);
+            $paymentStatus = clean($_POST['paymentstatus']);
+            $accountType   = clean($_POST['accounttype']);
+            $creditLimit   = clean($_POST['creditlimit']);
+            $phone         = clean($_POST['phonenumber']);
+            $hashedPassword = hash('sha512', $password);
+
+            $checkUser = $con->prepare(
+                "SELECT id FROM nexure_users WHERE email = ? LIMIT 1"
+            );
+            $checkUser->bind_param("s", $email);
+            $checkUser->execute();
+            $checkUser->store_result();
+
+            if ($checkUser->num_rows === 0) {
+
+                $insertUser = $con->prepare("
+                    INSERT INTO nexure_users (
+                        displayName, email, password,
+                        accessLevel, onlineAccessStatus,
+                        emailStatus, accountStatusReason,
+                        accountStatusDate, emailVerificationDate,
+                        firstInteractionDate, lastInteractionDate,
+                        oAuthID, paymentID, profileImage,
+                        riskScoreMonitoring
+                    ) VALUES (?, ?, ?, ?, 'Active', 'Unverified', '',
+                            NOW(), NULL, NOW(), NOW(),
+                            '', '', '', 'false')
+                ");
+
+                $insertUser->bind_param(
+                    "ssss",
+                    $name,
+                    $email,
+                    $hashedPassword,
+                    $role
+                );
+
+                $insertUser->execute();
+            }
+
+            do {
+                $randomPart   = str_pad(random_int(0, 9999999), 8, '0', STR_PAD_LEFT);
+                $accountNumber = $ACCOUNT_NUMBER_PREFIX . $randomPart;
+
+                $checkAcc = $con->prepare(
+                    "SELECT id FROM nexure_accounts WHERE accountNumber = ?"
+                );
+                $checkAcc->bind_param("s", $accountNumber);
+                $checkAcc->execute();
+                $checkAcc->store_result();
+
+            } while ($checkAcc->num_rows > 0);
+
+            $insertAccount = $con->prepare("
+                INSERT INTO nexure_accounts (
+                    email, accountNumber, accountStatus,
+                    accountStatusReason, accountType,
+                    creditLimit, paymentStatus,
+                    openedDate, restrictedDate, closedDate
+                ) VALUES (?, ?, ?, '', ?, ?, ?, CURDATE(), NULL, NULL)
+            ");
+
+            $insertAccount->bind_param(
+                "ssssss",
+                $email,
+                $accountNumber,
+                $status,
+                $accountType,
+                $creditLimit,
+                $paymentStatus
+            );
+
+            $insertAccount->execute();
+
+            if ($accountType === 'Business') {
+
+                $insertBusiness = $con->prepare("
+                    INSERT INTO nexure_businesses (
+                        accountNumber, businessLegalName,
+                        businessDBAName, businessIndustry,
+                        businessDescription, businessRevenue,
+                        businessLegalStructure, businessType,
+                        businessLine1, businessLine2,
+                        businessCity, businessState,
+                        businessCountry, businessPostalCode,
+                        businessTIN
+                    ) VALUES (?, ?, ?, '', '', '',
+                            ?, ?, ?, ?, ?, ?, ?, '', ?)
+                ");
+
+                $insertBusiness->bind_param(
+                    "ssssssssssss",
+                    $accountNumber,
+                    clean($_POST['businessname']),
+                    clean($_POST['businessdba']),
+                    clean($_POST['businessstructure']),
+                    clean($_POST['businesstype']),
+                    clean($_POST['addressline1']),
+                    clean($_POST['addressline2']),
+                    clean($_POST['city']),
+                    clean($_POST['state']),
+                    clean($_POST['country']),
+                    clean($_POST['businesstaxid'])
+                );
+
+                $insertBusiness->execute();
+            }
+
+            $insertOwnership = $con->prepare("
+                INSERT INTO nexure_ownership (
+                    accountNumber, legalName, mobileNumber,
+                    addressLine1, addressLine2,
+                    city, state, country,
+                    postalCode, socialSecurityNumber
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, '', '')
+            ");
+
+            $insertOwnership->bind_param(
+                "ssssssss",
+                $accountNumber,
+                $name,
+                $phone,
+                clean($_POST['addressline1']),
+                clean($_POST['addressline2']),
+                clean($_POST['city']),
+                clean($_POST['state']),
+                clean($_POST['country'])
+            );
+
+            $insertOwnership->execute();
+
+            mysqli_commit($con);
+
+            header("Location: /Dashboard/Administration/Accounts/");
+            exit;
+
+        } catch (Exception $e) {
+
+            mysqli_rollback($con);
+            error_log("Account Creation Failed: " . $e->getMessage());
+
+            header("Location: ?error=account_creation_failed");
+            exit;
+
+        }
+
+    }
+
 ?>
 
     <title>Emmie® by <?php echo $VariableDefinitionHandler->organizationShortName; ?> | <?php echo $PageTitle; ?></title>
@@ -43,12 +208,12 @@
                             <div class="nexure-grid nexure-three-grid no-row-gap width-100">
                                 <div>
                                     <div classs="form-control">
-                                        <label for="">Legal Name</label>
+                                        <label for="name">Legal Name</label>
                                         <input class="nexure-textbox" name="name" type="text" placeholder="John Doe" required="" />
                                     </div>
                                     <br>
                                     <div classs="form-control padding-top-10px">
-                                        <label for="">Role</label>
+                                        <label for="role">Role</label>
                                         <select class="nexure-textbox" name="role">
                                             <option>Customer</option>
                                             <option>Partner</option>
@@ -60,7 +225,7 @@
                                     </div>
                                     <br>
                                     <div classs="form-control padding-top-10px">
-                                        <label for="">Payment Status</label>
+                                        <label for="paymentstatus">Payment Status</label>
                                         <select class="nexure-textbox" name="paymentstatus">
                                             <optgroup label="Account Status Codes">
                                                 <option value="11">11 – Current Account</option>
@@ -101,13 +266,13 @@
                                 </div>
                                 <div>   
                                     <div classs="form-control">
-                                        <label for="">Email</label>
+                                        <label for="email">Email</label>
                                         <input class="nexure-textbox" name="email" type="email" placeholder="me@example.com" required="" />
                                     </div>
                                     <br>
                                     <div classs="form-control padding-top-10px">
-                                        <label for="">Status</label>
-                                        <select class="nexure-textbox" name="role">
+                                        <label for="status">Status</label>
+                                        <select class="nexure-textbox" name="status">
                                             <option>Active</option>
                                             <option>Under Review</option>
                                             <option>Suspended</option>
@@ -118,7 +283,7 @@
                                     </div>
                                     <br>
                                     <div classs="form-control padding-top-10px">
-                                        <label for="">Type</label>
+                                        <label for="accounttype">Type</label>
                                         <select class="nexure-textbox" name="accounttype">
                                             <option>Personal</option>
                                             <option>Business</option>
@@ -127,17 +292,17 @@
                                 </div>
                                 <div>   
                                     <div classs="form-control">
-                                        <label for="">Phone Number</label>
+                                        <label for="phonenumber">Phone Number</label>
                                         <input class="nexure-textbox" name="phonenumber" type="text" placeholder="1123456789" required="" />
                                     </div>
                                     <br>
                                     <div classs="form-control padding-top-10px">
-                                        <label for="">Credit Limit</label>
+                                        <label for="creditlimit">Credit Limit</label>
                                         <input class="nexure-textbox" name="creditlimit" type="text" placeholder="0.00" required="" />
                                     </div>
                                     <br>
                                     <div classs="form-control" style="padding-top-10px">
-                                        <label for="">Catagorization</label>
+                                        <label for="catagorization">Catagorization</label>
                                         <select class="nexure-textbox" name="catagorization">
                                             <option>Corporate Treasury</option>
                                             <option>Line of Credit</option>
@@ -159,23 +324,23 @@
                             <div class="nexure-grid nexure-three-grid no-row-gap width-100">
                                 <div>
                                     <div classs="form-control">
-                                        <label for="">Business Name</label>
-                                        <input class="nexure-textbox" name="businessname" type="text" placeholder="Little Internet Widgets" required="" />
+                                        <label for="businessname">Business Name</label>
+                                        <input class="nexure-textbox" name="businessname" type="text" placeholder="Little Internet Widgets" />
                                     </div>
                                     <br>
                                     <div classs="form-control padding-top-10px">
-                                        <label for="">Business Line 1</label>
-                                        <input class="nexure-textbox" name="addressline1" type="text" placeholder="123 Main Street" required="" />
+                                        <label for="addressline1">Business Line 1</label>
+                                        <input class="nexure-textbox" name="addressline1" type="text" placeholder="123 Main Street" />
                                     </div>
                                     <br>
                                     <div classs="form-control padding-top-10px">
-                                        <label for="">State</label>
-                                        <input class="nexure-textbox" name="state" type="text" placeholder="AS" required="" />
+                                        <label for="state">State</label>
+                                        <input class="nexure-textbox" name="state" type="text" placeholder="AS" />
                                     </div>
                                     <br> 
                                     <div class="form-control padding-top-10px">
                                         <label for="businessstructure">Business Legal Structure</label>
-                                        <select class="nexure-textbox" name="businessstructure" id="businessstructure" required>
+                                        <select class="nexure-textbox" name="businessstructure" id="businessstructure">
                                             <option value="">Select Legal Structure</option>
                                             <option value="sole-proprietorship">Sole Proprietorship</option>
                                             <option value="general-partnership">General Partnership</option>
@@ -193,17 +358,17 @@
                                 </div>
                                 <div>
                                     <div classs="form-control">
-                                        <label for="">Business DBA</label>
-                                        <input class="nexure-textbox" name="businessdba" type="text" placeholder="1234 Market Street" />
+                                        <label for="businessdba">Business DBA</label>
+                                        <input class="nexure-textbox" name="businessdba" type="text" placeholder="Little Internet" />
                                     </div>
                                     <br>
                                     <div classs="form-control padding-top-10px">
-                                        <label for="">Business Line 2</label>
-                                        <input class="nexure-textbox" name="addressline2" type="text" placeholder="" />
+                                        <label for="addressline2">Business Line 2</label>
+                                        <input class="nexure-textbox" name="addressline2" type="text" />
                                     </div>
                                     <div class="form-control padding-top-20px">
                                         <label for="country">Country</label>
-                                        <select class="nexure-textbox" name="country" id="country" required>
+                                        <select class="nexure-textbox" name="country" id="country">
                                             <option value="">Select Country</option>
                                             <option value="AF">Afghanistan</option>
                                             <option value="AL">Albania</option>
@@ -411,16 +576,16 @@
                                 <div>
                                     <div classs="form-control">
                                         <label for="">Business Tax ID</label>
-                                        <input class="nexure-textbox" name="businesstaxid" type="text" placeholder="123456789" required="" />
+                                        <input class="nexure-textbox" name="businesstaxid" type="text" placeholder="123456789" />
                                     </div>
                                     <br>
                                     <div classs="form-control padding-top-10px">
-                                        <label for="">City</label>
-                                        <input class="nexure-textbox" name="city" type="text" placeholder="Anycity" required="" />
+                                        <label for="city">City</label>
+                                        <input class="nexure-textbox" name="city" type="text" placeholder="Anycity" />
                                     </div>
                                     <div class="form-control padding-top-20px">
                                         <label for="businesstype">Business Type</label>
-                                        <select class="nexure-textbox" name="businesstype" id="businesstype" required>
+                                        <select class="nexure-textbox" name="businesstype" id="businesstype">
                                             <option value="">Select Business Type</option>
                                             <option value="sole-proprietor">Sole Proprietor</option>
                                             <option value="partnership">Partnership</option>
@@ -446,7 +611,7 @@
                             <div class="nexure-grid nexure-three-grid no-row-gap width-100">
                                 <div>
                                     <div classs="form-control">
-                                        <label for="">Password</label>
+                                        <label for="password">Password</label>
                                         <input class="nexure-textbox" name="password" type="password" placeholder="Super Secret Password" required="" />
                                     </div>
                                 </div>

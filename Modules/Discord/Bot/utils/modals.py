@@ -45,10 +45,8 @@ class InteractionContextAdapter:
 
 async def process_blacklist_db(data: dict):
     
-    
     if not constants.pool:
         await constants.connect()
-
 
     try:
         
@@ -115,11 +113,9 @@ async def process_blacklist_db(data: dict):
                             case_values
                         )
 
-
             await conn.commit()
             
         return case_id
-
 
     except Exception as e:
         print(f"[ERROR] Failed to process blacklist DB: {e}")
@@ -154,14 +150,11 @@ class BlacklistModal(discord.ui.Modal):
             "description": self.description_input.value
         }
 
-
         ctx = InteractionContextAdapter(interaction, interaction.client)
-        
         
         try:
             case_id = await process_blacklist_db(data)
             await ctx.send_success(f"The user {self.entity_display} has been **blacklisted** globally from Nexure with \ncase number `{case_id}`.")
-       
        
         except Exception as e:
             await ctx.send_error(f"> Failed to process blacklist because of an error \n`{e}`")

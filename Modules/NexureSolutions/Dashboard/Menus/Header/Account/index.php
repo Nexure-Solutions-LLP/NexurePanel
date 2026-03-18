@@ -7,12 +7,29 @@
                         <img src="/Assets/img/SystemImages/Icons/CustomerBusinessLogos/defaultstore.png" style="background-color:#ffe6e2;" class="client-business-andor-profile-logo" />
                     </div>
                     <div>
-                        <p class="no-padding font-14px">Account</p>
+                        <p class="no-padding font-12px">Account</p>
                         <?php
                             $mostRecentAccount = $CurrentOnlineAccessAccount->userAccounts[0] ?? null;
                             $headerName = $mostRecentAccount['headerName'] ?? $VariableDefinitionHandler->organizationShortName.' ACCOUNT';
                         ?>
-                        <h4 class="text-bold font-20px no-padding" style="padding-bottom:0px; padding-top:5px;"><?= htmlspecialchars($headerName) ?> - <?php echo $accountnumber; ?></h4>
+                        <span class="display-flex align-center">
+                            <h4 class="text-bold font-20px no-padding" style="padding-bottom:0px; padding-top:5px;"><?= htmlspecialchars($headerName) ?> - <?php echo $accountnumber; ?></h4>
+                            <?php
+
+                                $statusClasses = [
+                                    "Open" => "green",
+                                    "Suspended" => "red",
+                                    "Terminated" => "red-dark",
+                                    "Under Review" => "yellow",
+                                    "Closed" => "passive",
+                                    "Restricted" => "red-dark",
+                                ];
+                                
+                                $statusClass = $statusClasses[ucwords(strtolower($account['accountStatus']))] ?? 'default';
+                                echo "<span class='account-status-badge not-rounded $statusClass'>{$account['accountStatus']}</span>";
+
+                            ?>
+                        </span>
                     </div>
                 </div>
                 <div style="margin-top:-5px;">
@@ -37,7 +54,7 @@
                     
                     foreach ($details as $label => $value) {
 
-                        echo "<div style='width:75%;'><p class='no-padding font-14px'>{$label}</p><p class='margin-top-10px font-14px' style='margin-bottom:0; padding-bottom:0;'>{$value}</p></div>";
+                        echo "<div style='width:75%;'><p class='no-padding font-12px'>{$label}</p><p class='margin-top-10px font-14px' style='margin-bottom:0; padding-bottom:0;'>{$value}</p></div>";
                     
                     }
 
