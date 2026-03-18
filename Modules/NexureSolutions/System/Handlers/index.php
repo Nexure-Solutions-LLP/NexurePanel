@@ -253,41 +253,48 @@
         class AccountHandler
         {
 
-            public $nexureid;
-            public $displayName;
-            public $profileImage;
-            public $OnlineAccessInformation;
-            public $accessType;
-            public $accessLevel;
-            public $onlineAccessStatus;
-            public $firstinteractiondateformattedfinal;
-            public $lastinteractiondateformattedfinal;
-            public $emailverifydate;
-            public $emailverifydateformatted;
-            public $emailverifydateformattedfinal;
-            public $emailverifystatus;
-            public $paymentID;
-            public $userAccounts = [];
-            public $riskScoreMonitoring;
-
-            public $accountNumber;
-            public $accountType;
-            public $accountDisplayName;
-            public $headerName;
-            public $creditLimit;
-            public $balance;
-            public $minimumPayment;
-            public $dueDate;
-            public $accountStatus;
-            public $accountServices = [];
-            public $selectedAccountDetails;
-
+            public ?int $nexureid = null;
+            public ?string $displayName = null;
+            public ?string $profileImage = null;
+            public ?array $OnlineAccessInformation = null;
+            public ?string $accessType = null;
+            public ?string $accessLevel = null;
+            public ?string $onlineAccessStatus = null;
+            public ?string $firstinteractiondateformattedfinal = null;
+            public ?string $lastinteractiondateformattedfinal = null;
+            public ?string $openeddateformattedfinal = null;
+            public ?string $openedDate = null;
+            public ?string $emailverifydate = null;
+            public ?string $emailverifydateformatted = null;
+            public ?string $emailverifydateformattedfinal = null;
+            public ?string $emailverifystatus = null;
+            public ?string $paymentID = null;
+            public array $userAccounts = [];
+            public ?string $riskScoreMonitoring = null;
+            public ?string $accountNumber = null;
+            public ?string $accountType = null;
+            public ?string $accountDisplayName = null;
+            public ?string $headerName = null;
+            public ?float $creditLimit = null;
+            public ?float $balance = null;
+            public ?float $minimumPayment = null;
+            public ?string $dueDate = null;
+            public ?string $accountStatus = null;
+            public array $accountServices = [];
+            public ?array $selectedAccountDetails = null;
             public array $associatedFiles = [];
             public array $associatedCases = [];
             public array $associatedServices = [];
             public array $duplicateAccounts = [];
-
-            public $NexureRiskScore10;
+            public ?int $NexureRiskScore10 = null;
+            public array $identity = [];
+            public array $businessProfile = [];
+            public array $authorizedUsers = [];
+            public array $customerNotes = [];
+            public ?string $firstInteractionDate = null;
+            public ?string $lastInteractionDate = null;
+            public ?array $selectedUserProfile  = null;
+            public ?string $formattedBalance = null;
 
             private function fetchSingleRow(\mysqli $con, string $query, array $params = []): ?array
             {
@@ -814,182 +821,341 @@
 
             }
 
+            public function LoadFullCustomerProfile(\mysqli $con, string $email): void {
+
+                $user = $this->loadUserByEmail($con, $email);
+
+                if (!$user) {
+
+                    $this->selectedUserProfile = null;
+
+                    $this->customerNotes = [];
+
+                    $this->duplicateAccounts = [];
+
+                    return;
+
+                }
+
+                $this->selectedUserProfile = $user;
+
+                $userId = $user['id'];
+
+                $this->firstinteractiondateformattedfinal = $this->formatDate(
+
+                    $this->firstInteractionDate = $user['firstInteractionDate'] ?? null
+
+                );
+
+                $this->lastinteractiondateformattedfinal = $this->formatDate(
+
+                    $this->lastInteractionDate  = $user['lastInteractionDate'] ?? null
+
+                );
+
+                $this->riskScoreMonitoring  = $user['riskScoreMonitoring'] ?? null;
+
+                $this->loadRiskScore($con, $email);
+
+                $this->customerNotes = $this->loadNotes($con, $userId);
+
+                $accounts = $this->loadAccountsByEmail($con, $email);
+
+                $this->userAccounts = $accounts;
+
+                $this->identity = [];
+
+                $this->businessProfile = [];
+
+                foreach ($accounts as $acct) {
+
+                    $acctNum = $acct['accountNumber'] ?? null;
+
+                    if ($acctNum) {
+
+                        $this->identity = array_merge($this->identity, $this->loadIdentityByAccount($con, $acctNum));
+
+                        $this->businessProfile = array_merge($this->businessProfile, $this->loadBusinessByAccount($con, $acctNum));
+
+                    }
+
+                }
+
+                $ownerName    = $this->identity[0]['legalName'] ?? '';
+
+                $businessName = $this->businessProfile[0]['businessLegalName'] ?? '';
+
+                $industry     = $this->businessProfile[0]['businessIndustry'] ?? '';
+
+                $websiteDomain = '';
+
+                $this->duplicateAccounts = $this->findDuplicateAccounts($con, $ownerName, $businessName, $industry, $websiteDomain);
+
+            }
+
             public function LoadFullCustomerAccount(\mysqli $con, string $accountNumber): void {
 
-                $stmt = $con->prepare("SELECT email FROM nexure_accounts WHERE accountNumber = ? LIMIT 1");
+                $stmt = $con->prepare("SELECT * FROM nexure_accounts WHERE accountNumber = ? LIMIT 1");
 
                 $stmt->bind_param("s", $accountNumber);
 
                 $stmt->execute();
 
-                $row = $stmt->get_result()->fetch_assoc();
-                
+                $acct = $stmt->get_result()->fetch_assoc();
+
                 $stmt->close();
 
-                $userEmail = $row['email'] ?? null;
+                if (!$acct) {
+
+                    $this->selectedAccountDetails = null;
+
+                    $this->authorizedUsers = [];
+
+                    $this->associatedServices = [];
+
+                    $this->associatedCases = [];
+
+                    $this->associatedFiles = [];
+
+                    $this->identity = [];
+
+                    $this->businessProfile = [];
+
+                    return;
+
+                }
+
+                $this->selectedAccountDetails = $acct;
+
+                $userEmail = $acct['email'] ?? null;
+
+                $this->authorizedUsers = $userEmail ? $this->loadAuthorizedUsers($con, $userEmail) : [];
+
+                $this->associatedServices = $this->loadAccountData($con, 'nexure_services', $accountNumber);
+
+                $this->associatedCases    = $this->loadAccountData($con, 'nexure_cases', $accountNumber);
+
+                $this->associatedFiles    = $this->loadAccountData($con, 'nexure_files', $accountNumber);
+
+                $this->identity        = $this->loadIdentityByAccount($con, $accountNumber);
+
+                $this->businessProfile = $this->loadBusinessByAccount($con, $accountNumber);
+
+                $balance = 0.00;
 
                 if ($userEmail) {
 
-                    $this->GatherOnlineAccessInformation($con, $userEmail);
+                    $stmt = $con->prepare("SELECT paymentID FROM nexure_users WHERE email = ? LIMIT 1");
 
-                    $this->loadRiskScore($con, $userEmail);
-
-                    $this->GatherUserAccounts($con, $userEmail);
-
-                }
-
-                $this->GatherSingleAccountDetails($con, $accountNumber);
-
-                $this->associatedFiles = [];
-
-                $fileStmt = $con->prepare("SELECT * FROM nexure_files WHERE accountNumber = ?");
-
-                $fileStmt->bind_param("s", $accountNumber);
-
-                $fileStmt->execute();
-
-                $fileResult = $fileStmt->get_result();
-
-                while ($file = $fileResult->fetch_assoc()) {
-
-                    $this->associatedFiles[] = $file;
-
-                }
-
-                $fileStmt->close();
-
-                $this->associatedCases = [];
-
-                $caseStmt = $con->prepare("SELECT * FROM nexure_cases WHERE accountNumber = ?");
-
-                $caseStmt->bind_param("s", $accountNumber);
-
-                $caseStmt->execute();
-
-                $caseResult = $caseStmt->get_result();
-
-                while ($case = $caseResult->fetch_assoc()) {
-
-                    $this->associatedCases[] = $case;
-
-                }
-
-                $caseStmt->close();
-
-                $this->associatedServices = [];
-
-                $serviceStmt = $con->prepare("SELECT * FROM nexure_services WHERE accountNumber = ?");
-
-                $serviceStmt->bind_param("s", $accountNumber);
-                
-                $serviceStmt->execute();
-
-                $serviceResult = $serviceStmt->get_result();
-
-                while ($service = $serviceResult->fetch_assoc()) {
-
-                    $this->associatedServices[] = $service;
-
-                }
-
-                $serviceStmt->close();
-
-                $accountInfo = $this->selectedAccountDetails ?? [];
-
-                $ownerName      = $accountInfo['headerName'] ?? '';
-
-                $businessName   = $accountInfo['headerName'] ?? '';
-                
-                $industry       = $accountInfo['accountType'] ?? '';
-
-                $email          = $userEmail ?? '';
-
-                $websiteDomain  = '';
-
-                if (!empty($accountNumber) || !empty($ownerName) || !empty($businessName) || !empty($industry) || !empty($email) || !empty($websiteDomain)) {
-
-                    $query = "
-                        SELECT 
-                            a.accountNumber,
-                            u.email,
-                            o.legalName,
-                            b.businessLegalName,
-                            b.businessDBAName,
-                            b.businessIndustry,
-                            w.domainName
-                        FROM nexure_accounts a
-                        LEFT JOIN nexure_users u ON a.email = u.email
-                        LEFT JOIN nexure_ownership o ON a.accountNumber = o.accountNumber
-                        LEFT JOIN nexure_businesses b ON a.accountNumber = b.accountNumber
-                        LEFT JOIN nexure_websites w ON u.email = w.email
-                        WHERE
-                            (? != '' AND a.accountNumber = ?)
-                            OR (? != '' AND o.legalName LIKE CONCAT('%', ?, '%'))
-                            OR (? != '' AND b.businessLegalName LIKE CONCAT('%', ?, '%'))
-                            OR (? != '' AND b.businessDBAName LIKE CONCAT('%', ?, '%'))
-                            OR (? != '' AND b.businessIndustry = ? AND (b.businessLegalName LIKE CONCAT('%', ?, '%') OR b.businessDBAName LIKE CONCAT('%', ?, '%')))
-                            OR (? != '' AND w.domainName LIKE CONCAT('%', ?, '%'))
-
-                        UNION
-
-                        SELECT 
-                            a2.accountNumber,
-                            u2.email,
-                            o2.legalName,
-                            b2.businessLegalName,
-                            b2.businessDBAName,
-                            b2.businessIndustry,
-                            w2.domainName
-                        FROM nexure_accounts a2
-                        LEFT JOIN nexure_users u2 ON a2.email = u2.email
-                        LEFT JOIN nexure_ownership o2 ON a2.accountNumber = o2.accountNumber
-                        LEFT JOIN nexure_businesses b2 ON a2.accountNumber = b2.accountNumber
-                        LEFT JOIN nexure_websites w2 ON u2.email = w2.email
-                        WHERE
-                            (? != '' AND o2.legalName LIKE CONCAT('%', ?, '%'))
-                            OR (? != '' AND b2.businessLegalName LIKE CONCAT('%', ?, '%'))
-                            OR (? != '' AND b2.businessDBAName LIKE CONCAT('%', ?, '%'))
-                            OR (? != '' AND w2.domainName LIKE CONCAT('%', ?, '%'))
-                    ";
-
-                    $stmt = $con->prepare($query);
-
-                    $stmt->bind_param(
-                        "ssssssssssssssssssssss",
-                        $accountNumber, $accountNumber,
-                        $ownerName, $ownerName,
-                        $businessName, $businessName,
-                        $businessName, $businessName,
-                        $industry, $industry, $businessName, $businessName,
-                        $websiteDomain, $websiteDomain,
-                        $ownerName, $ownerName,
-                        $businessName, $businessName,
-                        $businessName, $businessName,
-                        $websiteDomain, $websiteDomain
-                    );
+                    $stmt->bind_param("s", $userEmail);
 
                     $stmt->execute();
 
-                    $result = $stmt->get_result();
-
-                    $this->duplicateAccounts = [];
-
-                    while ($row = $result->fetch_assoc()) {
-
-                        $this->duplicateAccounts[] = $row;
-
-                    }
+                    $payment = $stmt->get_result()->fetch_assoc();
 
                     $stmt->close();
 
-                } else {
-
-                    $this->duplicateAccounts = [];
+                    $this->paymentID = $payment['paymentID'] ?? null;
 
                 }
+
                 
+                $this->openeddateformattedfinal = $this->formatDate(
+
+                    $this->openedDate  = $acct['openedDate'] ?? null
+
+                );
+
+                $this->balance = $balance;
+
+                $this->minimumPayment = ($balance > 50) ? round($balance * 0.3, 2) : $balance;
+
+                $this->formattedBalance = number_format((float)$balance, 2);
+
+                $this->dueDate = date('Y-m-d', strtotime('+30 days'));
+            
             }
 
+            private function loadUserByEmail(\mysqli $con, string $email): ?array {
+
+                $stmt = $con->prepare("SELECT * FROM nexure_users WHERE email = ? LIMIT 1");
+
+                $stmt->bind_param("s", $email);
+
+                $stmt->execute();
+
+                $row = $stmt->get_result()->fetch_assoc();
+
+                $stmt->close();
+
+                return $row ?: null;
+
+            }
+
+            private function loadNotes(\mysqli $con, int $userId): array {
+
+                $notes = [];
+
+                $stmt = $con->prepare("SELECT * FROM nexure_notes WHERE userId = ?");
+
+                $stmt->bind_param("i", $userId);
+
+                $stmt->execute();
+
+                $res = $stmt->get_result();
+
+                while ($note = $res->fetch_assoc()) $notes[] = $note;
+
+                $stmt->close();
+
+                return $notes;
+
+            }
+
+            private function loadAccountsByEmail(\mysqli $con, string $email): array {
+
+                $accounts = [];
+
+                $stmt = $con->prepare("SELECT * FROM nexure_accounts WHERE email = ?");
+
+                $stmt->bind_param("s", $email);
+
+                $stmt->execute();
+
+                $res = $stmt->get_result();
+
+                while ($row = $res->fetch_assoc()) $accounts[] = $row;
+
+                $stmt->close();
+
+                return $accounts;
+
+            }
+
+            private function loadAuthorizedUsers(\mysqli $con, string $email): array {
+
+                $users = [];
+
+                $stmt = $con->prepare("SELECT * FROM nexure_users WHERE email = ?");
+
+                $stmt->bind_param("s", $email);
+
+                $stmt->execute();
+
+                $res = $stmt->get_result();
+
+                while ($row = $res->fetch_assoc()) $users[] = $row;
+
+                $stmt->close();
+
+                return $users;
+
+            }
+
+            private function loadAccountData(\mysqli $con, string $table, string $accountNumber): array {
+
+                $data = [];
+
+                $stmt = $con->prepare("SELECT * FROM {$table} WHERE accountNumber = ?");
+
+                $stmt->bind_param("s", $accountNumber);
+
+                $stmt->execute();
+
+                $res = $stmt->get_result();
+
+                while ($row = $res->fetch_assoc()) $data[] = $row;
+
+                $stmt->close();
+
+                return $data;
+
+            }
+
+            private function loadIdentityByAccount(\mysqli $con, string $accountNumber): array {
+
+                $identity = [];
+
+                $stmt = $con->prepare("SELECT * FROM nexure_ownership WHERE accountNumber = ?");
+
+                $stmt->bind_param("s", $accountNumber);
+
+                $stmt->execute();
+
+                $res = $stmt->get_result();
+
+                while ($row = $res->fetch_assoc()) $identity[] = $row;
+
+                $stmt->close();
+
+                return $identity;
+
+            }
+
+            private function loadBusinessByAccount(\mysqli $con, string $accountNumber): array {
+
+                $business = [];
+
+                $stmt = $con->prepare("SELECT * FROM nexure_businesses WHERE accountNumber = ?");
+
+                $stmt->bind_param("s", $accountNumber);
+
+                $stmt->execute();
+
+                $res = $stmt->get_result();
+
+                while ($row = $res->fetch_assoc()) $business[] = $row;
+
+                $stmt->close();
+
+                return $business;
+
+            }
+
+            private function findDuplicateAccounts(\mysqli $con, string $ownerName, string $businessName, string $industry, string $websiteDomain): array {
+
+                $duplicates = [];
+
+                $query = "
+                    SELECT 
+                        a.accountNumber, u.email, o.legalName, 
+                        b.businessLegalName, b.businessDBAName, b.businessIndustry, w.domainName
+                    FROM nexure_accounts a
+                    LEFT JOIN nexure_users u ON a.email = u.email
+                    LEFT JOIN nexure_ownership o ON a.accountNumber = o.accountNumber
+                    LEFT JOIN nexure_businesses b ON a.accountNumber = b.accountNumber
+                    LEFT JOIN nexure_websites w ON u.email = w.email
+                    WHERE
+                        (? != '' AND o.legalName LIKE CONCAT('%', ?, '%'))
+                        OR (? != '' AND b.businessLegalName LIKE CONCAT('%', ?, '%'))
+                        OR (? != '' AND b.businessDBAName LIKE CONCAT('%', ?, '%'))
+                        OR (? != '' AND b.businessIndustry = ? AND (b.businessLegalName LIKE CONCAT('%', ?, '%') OR b.businessDBAName LIKE CONCAT('%', ?, '%')))
+                        OR (? != '' AND w.domainName LIKE CONCAT('%', ?, '%'))
+                ";
+
+                $stmt = $con->prepare($query);
+
+                $stmt->bind_param(
+                    "ssssssssssss",
+                    $ownerName, $ownerName,
+                    $businessName, $businessName,
+                    $businessName, $businessName,
+                    $industry, $industry, $businessName, $businessName,
+                    $websiteDomain, $websiteDomain
+                );
+
+                $stmt->execute();
+
+                $res = $stmt->get_result();
+
+                while ($row = $res->fetch_assoc()) $duplicates[] = $row;
+
+                $stmt->close();
+
+                return $duplicates;
+
+            }
+            
         }
 
     }

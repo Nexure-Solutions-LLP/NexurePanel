@@ -4,29 +4,25 @@
             <div class="display-flex justify-content-space-between align-center padding-bottom-10px">
                 <div class="display-flex align-center padding-bottom-10px">
                     <div class="no-padding margin-right-20px icon-size-formatted">
-                        <img src="/Assets/img/SystemImages/Icons/CustomerBusinessLogos/defaultstore.png" style="background-color:#ffe6e2;" class="client-business-andor-profile-logo" />
+                        <img src="<?php echo $account['profileImage']; ?>" style="background-color:#fff;" class="client-business-andor-profile-logo" />
                     </div>
                     <div>
-                        <p class="no-padding font-12px">Account</p>
-                        <?php
-                            $mostRecentAccount = $CurrentOnlineAccessAccount->userAccounts[0] ?? null;
-                            $headerName = $mostRecentAccount['headerName'] ?? $VariableDefinitionHandler->organizationShortName.' ACCOUNT';
-                        ?>
+                        <p class="no-padding font-12px">Profile</p>
                         <span class="display-flex align-center">
-                            <h4 class="text-bold font-20px no-padding" style="padding-bottom:0px; padding-top:5px;"><?= htmlspecialchars($headerName) ?> - <?php echo $accountnumber; ?></h4>
+                            <h4 class="text-bold font-20px no-padding" style="padding-bottom:0px; padding-top:5px;"><?php echo $account['displayName']; ?></h4>
                             <?php
 
                                 $statusClasses = [
-                                    "Open" => "green",
+                                    "Active" => "green",
                                     "Suspended" => "red",
                                     "Terminated" => "red-dark",
                                     "Under Review" => "yellow",
-                                    "Closed" => "passive",
+                                    "Disabled" => "passive",
                                     "Restricted" => "red-dark",
                                 ];
                                 
-                                $statusClass = $statusClasses[ucwords(strtolower($account['accountStatus']))] ?? 'default';
-                                echo "<span class='account-status-badge not-rounded $statusClass'>{$account['accountStatus']}</span>";
+                                $statusClass = $statusClasses[ucwords(strtolower($account['onlineAccessStatus']))] ?? 'default';
+                                echo "<span class='account-status-badge not-rounded $statusClass'>{$account['onlineAccessStatus']}</span>";
 
                             ?>
                         </span>
@@ -45,10 +41,10 @@
                 <?php
 
                     $details = [
-                        'Owner'  => $identity['legalName'] ?? '—',
-                        'Type'   => $account['accountType'] ?? '—',
-                        'Opened Date' => $CurrentAccountExamination->openeddateformattedfinal ?? '—',
-                        'Credit Limit' => number_format((float)$account['creditLimit'], 2).'<a href="javascript:void(0);" onclick="openCreditModal()" class="brand-link"> (Change Limit)</a>',
+                        'Type' => 'Online Profile',
+                        'Owner' => $identity['legalName'],
+                        'First Interaction' => $CurrentAccountExamination->firstinteractiondateformattedfinal,
+                        'Last Interaction' => $CurrentAccountExamination->lastinteractiondateformattedfinal
                     ];
                     
                     foreach ($details as $label => $value) {
@@ -58,10 +54,6 @@
                     }
 
                 ?>
-                <div class="width-100">
-                    <p class="no-padding font-12px">Industry</p>
-                    <p class="no-padding font-14px margin-top-10px"><?php echo $business['businessIndustry'] ?? '—' ?></p>
-                </div>
             </div>
         </div>
     </div>

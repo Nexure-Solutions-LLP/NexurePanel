@@ -243,12 +243,9 @@
             switch (strtolower($tableType)) {
 
                 case 'accounts':
-                    $sql = "SELECT a.*, u.displayName, u.accessLevel, u.onlineAccessStatus 
-                            FROM nexure_accounts a 
-                            LEFT JOIN nexure_users u ON a.email = u.email 
-                            ORDER BY a.id DESC";
-                    $result = mysqli_query($con, $sql);
-                    if ($result) while ($row = mysqli_fetch_assoc($result)) $rows[] = $row;
+                    if (!empty($account['userAccounts'])) {
+                        $rows = $account['userAccounts'];
+                    }
                     break;
                 case 'account_services':
                     if (!empty($account['associatedServices'])) {
@@ -266,8 +263,8 @@
                     }
                     break;
                 case 'account_users':
-                    if (!empty($account['userAccounts'])) {
-                        $rows = $account['userAccounts'];
+                    if (!empty($account['authorizedUsers'])) {
+                        $rows = $account['authorizedUsers'];
                     }
                     break;
                 case 'tasks':

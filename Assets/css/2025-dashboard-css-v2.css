@@ -163,6 +163,14 @@ h6 {
     font-family: "Mona Sans", sans-serif !important;
 }
 
+.border-netural {
+    border-bottom: 3px solid #ddd;
+}
+
+.border-selected {
+    border-bottom: 3px solid #60b3f7;
+}
+
 /* ====================== Container Styles ===================== */
 
 .container, 
@@ -188,6 +196,10 @@ h6 {
 .grid-sidebar {
     -ms-grid-columns: .35fr 1.6fr;
     grid-template-columns: .35fr 1.6fr;
+}
+
+.no-column-gap {
+    grid-column-gap: 0px;
 }
 
 /* ====================== Header Styles ===================== */
@@ -824,7 +836,7 @@ body.dark-mode {
     border:1px solid #333;
 }
 
-.sidebar-item a {
+.dark-mode .sidebar-item a {
     color: #dbdbdb;
 }
 
@@ -834,6 +846,14 @@ body.dark-mode {
 
 .dark-mode .brand-link:hover {
     color: #1584e0 !important;
+}
+
+.dark-mode .border-netural {
+    border-bottom: 3px solid #333;
+}
+
+.dark-mode .border-selected {
+    border-bottom: 3px solid #60b3f7;
 }
 
 /* ====================== Mobile Styles ===================== */
