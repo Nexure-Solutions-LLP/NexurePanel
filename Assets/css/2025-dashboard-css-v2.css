@@ -326,6 +326,11 @@ h6 {
     backdrop-filter: none !important;
 }
 
+.nexure-brand-switcher.development {
+    background-color: #E0F9FF;
+    color:#000;
+}
+
 /* ====================== Section Styles ===================== */
 
 .section.dashboard {
@@ -427,9 +432,10 @@ h6 {
     top: 0;
     width: 100%;
     height: 100%;
-    overflow: auto;
+    overflow: hidden;
     background-color: rgba(0, 0, 0, 0.7);
     padding-top: 60px;
+    z-index: 1000 !important;
 }
 
 .modal-content {
@@ -854,6 +860,11 @@ body.dark-mode {
 
 .dark-mode .border-selected {
     border-bottom: 3px solid #60b3f7;
+}
+
+.dark-mode .nexure-brand-switcher.development {
+    background-color: #C1D4DB;
+    color:#000;
 }
 
 /* ====================== Mobile Styles ===================== */

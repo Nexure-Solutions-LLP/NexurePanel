@@ -114,6 +114,19 @@
 
         <body>
 
+            <?php if ($VariableDefinitionHandler->maintenanceStatus === "True"): ?>
+
+            <div class="nexure-brand-switcher development">
+                <div class="container nexure-container">
+                    <div class="display-flex align-center justify-content-center">
+                        <p class="font-12px">Development mode is enabled. Contact your system administratator for more information.</p>
+                        <a href="javascript:void(0)" onclick="openDeveloperModal()" class="nexure-button secondary margin-left-20px" style="padding:4px 14px;">Examine a property</a>
+                    </div>
+                </div>
+            </div>
+
+            <?php endif; ?>
+
             <div class="nexure-header" id="nexure-header-js">
                 <div class="background-darker-300">
                     <div class="container nexure-container nexure-nav-container">

@@ -20,6 +20,28 @@
 
         ?>
 
+        <div id="developerModal" class="modal">
+            <div class="modal-content" style="margin-top:4%;">
+                <form method="POST" action="">
+                    <h6 style="font-size:16px; font-weight:800; padding:0; margin:0;"><?php echo $LANG_DEVELOPER_TOOLKIT_TITLE; ?></h6>
+                    <div style="height:500px; overflow-y:scroll; margin-top:30px; margin-bottom:30px;">
+                        <pre>
+                            <?php
+                                if ($PageTitle == "Customer Accounts") {
+                                    var_dump($CurrentAccountExamination);
+                                } else {
+                                    var_dump($VariableDefinitionHandler);
+                                }
+                            ?>
+                        </pre>
+                    </div>
+                    <div style="display:flex; align-items:right; justify-content:right;">
+                        <a class="nexure-button secondary" href="javascript:void(0)" onclick="closeDeveloperModal()"><?php echo $LANG_CLOSE_MODAL_BUTTON; ?></a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
         <script type="text/javascript"  src="/Assets/js/Dashboard.js"></script>
         <script src="https://nexuresolutions.com/assets/js/index.js" type="text/javascript"></script>
     </body>

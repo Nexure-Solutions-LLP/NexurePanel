@@ -90,6 +90,7 @@
     $LANG_CHANGE_CREDITLIMIT_BUTTON = "Submit Credit Line Change";
     $LANG_INCREASE_BALANCECHANGE_BUTTON = "Submit Balance Change";
     $LANG_DECREASE_BALANCE_BUTTON = "Submit Payment";
+    $LANG_DEVELOPER_TOOLKIT_TITLE = "Examine a property";
 
     $LANG_CLOSE_MODAL_BUTTON = "Close";
 

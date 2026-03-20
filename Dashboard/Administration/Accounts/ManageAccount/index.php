@@ -80,7 +80,7 @@
                                         ['displayName', 'email', 'accessLevel', 'onlineAccessStatus'],
                                         ['25%', '30%', '20%', '15%'],
                                         [
-                                            'View' => "/Dashboard/Administration/Accounts/ManageAccount/?account_number={accountNumber}",
+                                            'View' => "/Dashboard/Administration/Profiles/ManageProfile/?email={email}",
                                             'Edit' => "/Dashboard/Administration/Accounts/EditAccount/?account_number={accountNumber}"
                                         ],
                                         (array)$CurrentAccountExamination

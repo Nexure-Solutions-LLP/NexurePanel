@@ -171,13 +171,14 @@ function toggleModal(modal, show) {
 var modalChangeBalance = document.getElementById("setbalanceModal");
 var modalPayBalance = document.getElementById("paybalanceModal");
 var modalCreditBalance = document.getElementById("creditLimitModal");
+var modalDeveloper = document.getElementById("developerModal");
 
-function openBalanceModal() {
-    toggleModal(modalChangeBalance, true);
+function openDeveloperModal() {
+    toggleModal(modalDeveloper, true);
 }
 
-function closeBalanceModal() {
-    toggleModal(modalChangeBalance, false);
+function closeDeveloperModal() {
+    toggleModal(modalDeveloper, false);
 }
 
 function openPaymentModal() {
@@ -194,6 +195,14 @@ function openCreditModal() {
 
 function closeCreditModal() {
     toggleModal(modalCreditBalance, false);
+}
+
+function openBalanceModal() {
+    toggleModal(modalChangeBalance, true);
+}
+
+function closeBalanceModal() {
+    toggleModal(modalChangeBalance, false);
 }
 
 // ====================== Dashboard Time of Day Text ======================
